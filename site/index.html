@@ -1,0 +1,1955 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>客户价值与应收风险看板 - 最新数据</title>
+  <style>
+    :root { --bg:#f3f5f8; --panel:#fff; --ink:#1f2430; --muted:#667085; --line:#dfe3eb; --blue:#5477c4; --gold:#b8a037; --orange:#cc6f47; --olive:#71b436; --pink:#bd569b; --soft-blue:#eef4ff; --soft-gold:#fff7d6; --soft-orange:#fff1e9; --soft-pink:#fff0f4; }
+    * { box-sizing:border-box; } body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; color:var(--ink); background:var(--bg); }
+    header { background:#fff; border-bottom:1px solid var(--line); } .hero { max-width:1480px; margin:0 auto; padding:18px 32px; display:grid; grid-template-columns:minmax(620px,1fr) minmax(500px,.86fr); gap:18px; align-items:start; }
+    main { max-width:1480px; margin:0 auto; padding:18px 32px 48px; } h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; } h2 { margin:0 0 14px; font-size:18px; letter-spacing:0; } h3 { margin:0 0 10px; font-size:15px; letter-spacing:0; } p { margin:0; color:var(--muted); line-height:1.6; } .source { font-size:13px; }
+    .grid { display:grid; gap:14px; } .kpis { grid-template-columns:repeat(6,minmax(0,1fr)); } .two { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .three { grid-template-columns:repeat(3,minmax(0,1fr)); } .four { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px; box-shadow:0 8px 24px rgba(16,24,40,.05); } .card.tight { padding:14px; }
+    .summary { border-left:4px solid var(--blue); background:#f8faff; border-radius:6px; padding:14px 16px; } .summary h2 { margin-bottom:8px; } .summary ul { margin:0; padding-left:18px; color:var(--ink); } .summary li { margin:5px 0; line-height:1.34; font-size:13px; }
+    .hero-left { display:grid; gap:12px; } .hero-top { display:flex; justify-content:space-between; gap:16px; align-items:start; } .global-filter { display:flex; align-items:center; gap:8px; white-space:nowrap; color:var(--muted); font-size:12px; } .global-filter select { min-width:132px; }
+    .hero-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; } .hero-metric { border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fff; min-height:78px; text-align:left; appearance:none; width:100%; } .hero-metric span { display:block; color:var(--muted); font-size:12px; } .hero-metric b { display:block; margin-top:6px; font-size:19px; font-variant-numeric:tabular-nums; } .hero-metric em { display:block; margin-top:3px; color:var(--muted); font-size:11px; font-style:normal; } .hero-metric.drill-hero:hover,.hero-metric.drill-hero.active { border-color:var(--blue); box-shadow:0 0 0 3px rgba(84,119,196,.12); }
+    .pill { display:inline-flex; align-items:center; height:28px; padding:0 10px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:12px; background:#fff; }
+    section { margin-top:16px; } button { cursor:pointer; font:inherit; } .kpi { text-align:left; appearance:none; width:100%; } .kpi:hover,.kpi.active,.group-card:hover,.group-card.active { border-color:var(--blue); box-shadow:0 0 0 3px rgba(84,119,196,.12); }
+    .kpi .label { color:var(--muted); font-size:12px; margin-bottom:8px; } .kpi .value { font-size:23px; font-weight:760; font-variant-numeric:tabular-nums; } .kpi .hint { color:var(--muted); font-size:12px; margin-top:6px; }
+    .insight { display:grid; gap:8px; min-height:142px; } .insight b { font-size:16px; } .insight .num { font-size:24px; font-weight:780; font-variant-numeric:tabular-nums; } .insight p { font-size:13px; }
+    .freq-section { grid-template-columns:repeat(3,minmax(0,1fr)); } .freq-card { appearance:none; width:100%; text-align:left; background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; box-shadow:0 8px 24px rgba(16,24,40,.05); } .freq-card:hover,.freq-card.active { box-shadow:0 0 0 3px rgba(84,119,196,.12); } .freq-card.green { border-top:5px solid #71b436; } .freq-card.yellow { border-top:5px solid #b8a037; } .freq-card.red { border-top:5px solid #cc6f47; } .freq-head { display:flex; justify-content:space-between; gap:10px; align-items:start; } .freq-head h2 { margin:0; } .freq-badge { border-radius:999px; padding:4px 9px; font-size:12px; white-space:nowrap; } .green .freq-badge { background:#edf8e7; color:#386411; } .yellow .freq-badge { background:#fff7d6; color:#736422; } .red .freq-badge { background:#fff1e9; color:#804126; } .freq-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0; } .freq-metric { border:1px solid #eef1f7; border-radius:6px; padding:8px; } .freq-metric span { display:block; color:var(--muted); font-size:11px; } .freq-metric b { display:block; margin-top:4px; font-size:16px; font-variant-numeric:tabular-nums; } .freq-list { display:grid; gap:6px; margin-top:10px; } .freq-customer { display:grid; grid-template-columns:1fr auto; gap:6px; color:var(--muted); font-size:12px; } .freq-customer strong { color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bar-row { display:grid; grid-template-columns:132px 1fr 86px; align-items:center; gap:10px; min-height:36px; margin:7px 0; appearance:none; width:100%; border:0; background:transparent; text-align:left; padding:3px 0; } .bar-row:hover .bar-track { outline:2px solid rgba(84,119,196,.16); } .bar-label { min-width:0; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .bar-label span { display:block; font-size:11px; color:var(--muted); margin-top:2px; overflow:hidden; text-overflow:ellipsis; } .bar-track { height:16px; background:#eef1f7; border-radius:4px; overflow:hidden; } .bar-fill { height:100%; border-radius:4px; } .bar-value { text-align:right; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+    .group-list { display:grid; gap:10px; } .group-card { appearance:none; width:100%; border:1px solid var(--line); background:#fff; border-radius:8px; padding:12px; text-align:left; } .group-top { display:flex; align-items:center; gap:8px; min-width:0; } .group-top strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .group-top em { margin-left:auto; color:var(--muted); font-style:normal; font-size:12px; } .dot { width:10px; height:10px; border-radius:50%; flex:0 0 auto; } .group-main { display:flex; justify-content:space-between; gap:12px; margin-top:10px; font-variant-numeric:tabular-nums; } .group-main span { font-size:17px; font-weight:760; } .group-main b { font-size:12px; color:var(--orange); align-self:end; } .group-bar { height:6px; border-radius:6px; background:#eef1f7; overflow:hidden; margin:10px 0 7px; } .group-bar i { display:block; height:100%; border-radius:6px; } .group-foot { color:var(--muted); font-size:12px; }
+    .drill-panel { display:grid; grid-template-columns:1fr 1.15fr 360px; gap:14px; align-items:start; border-color:#cdd8f1; background:#fbfcff; } .drill-title { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; } .drill-title h2 { margin:0; } .drill-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:14px; } .mini-metric { border:1px solid var(--line); background:#fff; border-radius:8px; padding:10px; } .mini-metric span { display:block; color:var(--muted); font-size:12px; } .mini-metric b { display:block; font-size:18px; margin-top:5px; font-variant-numeric:tabular-nums; }
+    .drill-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; max-height:256px; overflow:auto; padding-right:4px; } .customer-chip { border:1px solid var(--line); background:#fff; border-radius:8px; padding:9px 10px; display:grid; grid-template-columns:1fr auto; gap:4px 10px; font-size:12px; text-align:left; } .customer-chip:hover { border-color:var(--blue); } .customer-chip strong { font-size:13px; } .customer-chip span { color:var(--muted); }
+    .customer-detail { border:1px solid var(--line); border-radius:8px; background:#fff; padding:14px; min-height:264px; } .detail-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; } .detail-head strong { font-size:18px; } .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; } .detail-item { border-bottom:1px solid #eef1f7; padding:6px 0; } .detail-item span { display:block; color:var(--muted); font-size:11px; } .detail-item b { display:block; font-size:13px; margin-top:2px; font-variant-numeric:tabular-nums; }
+    .matrix { width:100%; border-collapse:collapse; font-size:13px; } .matrix th,.matrix td { border-bottom:1px solid var(--line); padding:10px 8px; text-align:right; white-space:nowrap; } .matrix th:first-child,.matrix td:first-child { text-align:left; white-space:normal; } .matrix tr.drillable { cursor:pointer; } .matrix tr.drillable:hover td { background:#f8faff; }
+    .tag { display:inline-flex; padding:3px 8px; border-radius:999px; background:#eef1f7; font-size:12px; } .tag.hot { background:#fff4c2; color:#736422; } .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; } input,select,.toolbar button,#clearDrill { border:1px solid var(--line); background:#fff; border-radius:6px; padding:9px 10px; font:inherit; font-size:13px; } input { min-width:260px; } button.active { background:var(--blue); color:#fff; border-color:var(--blue); }
+    .table-wrap { max-height:620px; overflow:auto; border:1px solid var(--line); border-radius:8px; } table.detail { width:100%; border-collapse:separate; border-spacing:0; font-size:12px; background:#fff; } .detail th { position:sticky; top:0; z-index:1; background:#f8f9fc; color:#475467; border-bottom:1px solid var(--line); padding:10px 8px; text-align:left; white-space:nowrap; cursor:pointer; } .detail td { border-bottom:1px solid #eef1f7; padding:9px 8px; white-space:nowrap; font-variant-numeric:tabular-nums; } .detail tbody tr { cursor:pointer; } .detail tbody tr:hover td,.detail tbody tr.selected td { background:#eef4ff; } .note { font-size:12px; color:var(--muted); margin-top:10px; }
+    @media (max-width:1200px){ .hero,.drill-panel { grid-template-columns:1fr; } .kpis { grid-template-columns:repeat(3,1fr); } .four { grid-template-columns:repeat(2,1fr); } .two,.three,.freq-section { grid-template-columns:1fr; } }
+    @media (max-width:760px){ .hero,main { padding-left:16px; padding-right:16px; } .hero-top { display:grid; } .hero-metrics,.kpis,.four,.drill-metrics,.drill-list,.detail-grid { grid-template-columns:1fr 1fr; } .bar-row { grid-template-columns:106px 1fr 72px; } input { min-width:100%; } }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-top">
+          <div>
+            <h1>客户价值与应收风险看板</h1>
+            <p class="source">数据源：应收报告2026-06-26.xlsx；只剔除“小计/说明行”。生成时间：2026-06-26 15:40</p>
+          </div>
+          <label class="global-filter">业务员
+            <select id="salesFilter"><option value="">全部业务员</option></select>
+          </label>
+        </div>
+        <div class="hero-metrics">
+          <button class="hero-metric drill-hero" data-hero-drill="top5"><span>Top 5 贡献</span><b id="heroTop5">48.4%</b><em>点击查看 Top 5 客户</em></button>
+          <button class="hero-metric drill-hero" data-hero-drill="top10"><span>Top 10 贡献</span><b id="heroTop10">59.8%</b><em>点击查看 Top 10 客户</em></button>
+          <button class="hero-metric drill-hero" data-hero-drill="core80"><span>80% 营业额客户数</span><b id="heroCoreCount">31</b><em>点击查看核心维护池</em></button>
+          <div class="hero-metric"><span id="heroScopeLabel">业务员数</span><b id="heroSalesCount">4</b><em id="heroTestCount">疑似测试 0 个</em></div>
+        </div>
+      </div>
+      <div class="summary">
+        <h2>结论摘要</h2>
+        <ul>
+          <li><strong>规模扩大但应收同步上升。</strong>未找到上一版文件，无法计算版本变化。</li>
+          <li><strong>收入仍高度集中。</strong>Top 10 客户贡献 59.8% 营业额，前 31 个客户贡献约 80%，客户维护优先级应围绕头部客户展开。</li>
+          <li><strong>回款风险集中在少数高价值客户。</strong>当前未支付 89.07万，未支付率 32.5%；未支付 Top 12 占 69.2%。</li>
+          <li><strong>直客回款压力高于同行。</strong>直客未支付率 32.4%，同行未支付率 32.5%；直客增长要同时配合更严格的账期/额度管理。</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="grid kpis">
+      <button class="card kpi" data-kpi-action="all"><div class="label">客户数</div><div class="value" id="kpiCustomers">148</div><div class="hint" id="kpiCustomersHint">点击查看全部客户</div></button>
+      <button class="card kpi" data-kpi-action="all"><div class="label">营业额</div><div class="value" id="kpiRevenue">274.32万</div><div class="hint">人民币口径</div></button>
+      <button class="card kpi" data-kpi-action="paid"><div class="label">已支付</div><div class="value" id="kpiPaid">185.25万</div><div class="hint" id="kpiPaidHint">支付率 67.5%</div></button>
+      <button class="card kpi" data-kpi-action="unpaid"><div class="label">未支付</div><div class="value" id="kpiUnpaid">89.07万</div><div class="hint" id="kpiUnpaidHint">未支付率 32.5%</div></button>
+      <button class="card kpi" data-kpi-action="unpaid"><div class="label">有未付客户</div><div class="value" id="kpiUnpaidCustomers">74</div><div class="hint" id="kpiUnpaidCustomersHint">占客户数 50.0%</div></button>
+      <button class="card kpi" data-kpi-action="negative"><div class="label">实际余额为负</div><div class="value" id="kpiNegativeBalance">44.26万</div><div class="hint" id="kpiNegativeHint">38 个客户</div></button>
+    </section>
+
+    <section class="grid four">
+      <div class="card insight"><b>客户价值看法</b><div class="num" id="insightTopValue">196.93万</div><p id="insightTopText">Top 20 客户贡献 71.8% 营业额，是服务稳定性、价格策略和专属客服投入的核心对象。</p></div>
+      <div class="card insight"><b>回款优先级</b><div class="num" id="insightCollectionValue">71.74万</div><p id="insightCollectionText">24 个“本周重点跟进”客户占未支付 80.5%，应优先由销售和客服逐户确认账单状态。</p></div>
+      <div class="card insight"><b>结构风险</b><div class="num" id="insightStructureValue">209.46万</div><p id="insightStructureText">预付贡献最高，占营业额 76.4%；需要按结算方式跟踪回款承诺和额度。</p></div>
+      <div class="card insight"><b>数据质量</b><div class="num" id="insightDataValue">0</div><p id="insightDataText">疑似测试账号已保留在明细，建议系统侧确认是否排除；本看板不擅自删除，避免影响账务核对。</p></div>
+    </section>
+
+    <section class="grid freq-section">
+      <button class="freq-card green" data-frequency-drill="high">
+        <div class="freq-head"><h2>高频发货客户</h2><span class="freq-badge">重点去聊</span></div>
+        <p class="note">当前范围营业额 Top 20%，优先维护价格、时效和服务稳定性。</p>
+        <div class="freq-metrics">
+          <div class="freq-metric"><span>客户数</span><b id="freqHighCount">-</b></div>
+          <div class="freq-metric"><span>营业额</span><b id="freqHighRevenue">-</b></div>
+          <div class="freq-metric"><span>未支付</span><b id="freqHighUnpaid">-</b></div>
+        </div>
+        <div class="freq-list" id="freqHighList"></div>
+      </button>
+      <button class="freq-card yellow" data-frequency-drill="mid">
+        <div class="freq-head"><h2>中频发货客户</h2><span class="freq-badge">持续跟进</span></div>
+        <p class="note">当前范围中间 30%，适合跟进需求、报价和稳定发货节奏。</p>
+        <div class="freq-metrics">
+          <div class="freq-metric"><span>客户数</span><b id="freqMidCount">-</b></div>
+          <div class="freq-metric"><span>营业额</span><b id="freqMidRevenue">-</b></div>
+          <div class="freq-metric"><span>未支付</span><b id="freqMidUnpaid">-</b></div>
+        </div>
+        <div class="freq-list" id="freqMidList"></div>
+      </button>
+      <button class="freq-card red" data-frequency-drill="low">
+        <div class="freq-head"><h2>低频发货客户</h2><span class="freq-badge">加深合作</span></div>
+        <p class="note">当前范围后 50%，适合激活、了解流失原因和扩大合作品类。</p>
+        <div class="freq-metrics">
+          <div class="freq-metric"><span>客户数</span><b id="freqLowCount">-</b></div>
+          <div class="freq-metric"><span>营业额</span><b id="freqLowRevenue">-</b></div>
+          <div class="freq-metric"><span>未支付</span><b id="freqLowUnpaid">-</b></div>
+        </div>
+        <div class="freq-list" id="freqLowList"></div>
+      </button>
+    </section>
+
+    <section class="card drill-panel" id="drillPanel">
+      <div>
+        <div class="drill-title"><h2 id="drillTitle">当前钻取：全部客户</h2><button id="clearDrill">清除钻取</button></div>
+        <p id="drillText">点击 KPI、分层卡片、客户类型、结算方式、排行条或明细行，即可查看对应客户清单和单客户详情。</p>
+        <div class="drill-metrics">
+          <div class="mini-metric"><span>客户数</span><b id="drillCount">-</b></div>
+          <div class="mini-metric"><span>营业额</span><b id="drillRevenue">-</b></div>
+          <div class="mini-metric"><span>未支付</span><b id="drillUnpaid">-</b></div>
+          <div class="mini-metric"><span>未支付率</span><b id="drillRate">-</b></div>
+        </div>
+      </div>
+      <div>
+        <h3>当前范围客户清单（按潜力排序）</h3>
+        <div class="drill-list" id="drillCustomers"></div>
+      </div>
+      <div class="customer-detail" id="customerDetail">
+        <div class="detail-head"><strong id="detailUser">未选择客户</strong><span class="tag" id="detailAction">点击客户查看</span></div>
+        <p class="note" id="detailNote">点击左侧客户清单、排行条或明细表任意客户，查看单客户金额、类型、风险和建议。</p>
+        <div class="detail-grid" id="detailGrid"></div>
+      </div>
+    </section>
+
+    <section class="grid four">
+      <div class="card"><h2>客户价值分层</h2><div class="group-list">
+            <button class="group-card drillable" data-drill-field="segment" data-drill-value="高价值需回款跟进" data-drill-label="高价值需回款跟进">
+              <div class="group-top">
+                <span class="dot" style="background:#5477C4"></span>
+                <strong>高价值需回款跟进</strong>
+                <em>24 客户</em>
+              </div>
+              <div class="group-main">
+                <span>137.56万</span>
+                <b>未付 71.74万</b>
+              </div>
+              <div class="group-bar"><i style="width:100.00%; background:#5477C4;"></i></div>
+              <div class="group-foot">收入占 50.1% · 未付率 52.1% · 未付占 80.5%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="segment" data-drill-value="核心高价值" data-drill-label="核心高价值">
+              <div class="group-top">
+                <span class="dot" style="background:#CC6F47"></span>
+                <strong>核心高价值</strong>
+                <em>6 客户</em>
+              </div>
+              <div class="group-main">
+                <span>80.62万</span>
+                <b>未付 2.73万</b>
+              </div>
+              <div class="group-bar"><i style="width:58.60%; background:#CC6F47;"></i></div>
+              <div class="group-foot">收入占 29.4% · 未付率 3.4% · 未付占 3.1%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="segment" data-drill-value="中腰部需跟进" data-drill-label="中腰部需跟进">
+              <div class="group-top">
+                <span class="dot" style="background:#71B436"></span>
+                <strong>中腰部需跟进</strong>
+                <em>31 客户</em>
+              </div>
+              <div class="group-main">
+                <span>31.30万</span>
+                <b>未付 12.22万</b>
+              </div>
+              <div class="group-bar"><i style="width:22.75%; background:#71B436;"></i></div>
+              <div class="group-foot">收入占 11.4% · 未付率 39.0% · 未付占 13.7%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="segment" data-drill-value="中腰部稳定" data-drill-label="中腰部稳定">
+              <div class="group-top">
+                <span class="dot" style="background:#B8A037"></span>
+                <strong>中腰部稳定</strong>
+                <em>13 客户</em>
+              </div>
+              <div class="group-main">
+                <span>11.55万</span>
+                <b>未付 0.03万</b>
+              </div>
+              <div class="group-bar"><i style="width:8.39%; background:#B8A037;"></i></div>
+              <div class="group-foot">收入占 4.2% · 未付率 0.3% · 未付占 0.0%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="segment" data-drill-value="低贡献/待激活" data-drill-label="低贡献/待激活">
+              <div class="group-top">
+                <span class="dot" style="background:#C5CAD3"></span>
+                <strong>低贡献/待激活</strong>
+                <em>58 客户</em>
+              </div>
+              <div class="group-main">
+                <span>9.98万</span>
+                <b>未付 0.00万</b>
+              </div>
+              <div class="group-bar"><i style="width:7.26%; background:#C5CAD3;"></i></div>
+              <div class="group-foot">收入占 3.6% · 未付率 0.0% · 未付占 0.0%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="segment" data-drill-value="低贡献且有风险" data-drill-label="低贡献且有风险">
+              <div class="group-top">
+                <span class="dot" style="background:#BD569B"></span>
+                <strong>低贡献且有风险</strong>
+                <em>16 客户</em>
+              </div>
+              <div class="group-main">
+                <span>3.32万</span>
+                <b>未付 2.36万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#BD569B;"></i></div>
+              <div class="group-foot">收入占 1.2% · 未付率 71.3% · 未付占 2.7%</div>
+            </button>
+            </div></div>
+      <div class="card"><h2>应收风险层级</h2><div class="group-list">
+            <button class="group-card drillable" data-drill-field="risk" data-drill-value="高风险未付" data-drill-label="高风险未付">
+              <div class="group-top">
+                <span class="dot" style="background:#CC6F47"></span>
+                <strong>高风险未付</strong>
+                <em>60 客户</em>
+              </div>
+              <div class="group-main">
+                <span>156.25万</span>
+                <b>未付 84.46万</b>
+              </div>
+              <div class="group-bar"><i style="width:100.00%; background:#CC6F47;"></i></div>
+              <div class="group-foot">收入占 57.0% · 未付率 54.1% · 未付占 94.8%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="risk" data-drill-value="低风险未付" data-drill-label="低风险未付">
+              <div class="group-top">
+                <span class="dot" style="background:#BD569B"></span>
+                <strong>低风险未付</strong>
+                <em>3 客户</em>
+              </div>
+              <div class="group-main">
+                <span>72.06万</span>
+                <b>未付 2.76万</b>
+              </div>
+              <div class="group-bar"><i style="width:46.12%; background:#BD569B;"></i></div>
+              <div class="group-foot">收入占 26.3% · 未付率 3.8% · 未付占 3.1%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="risk" data-drill-value="已清账/无未付" data-drill-label="已清账/无未付">
+              <div class="group-top">
+                <span class="dot" style="background:#5477C4"></span>
+                <strong>已清账/无未付</strong>
+                <em>74 客户</em>
+              </div>
+              <div class="group-main">
+                <span>30.08万</span>
+                <b>未付 0.00万</b>
+              </div>
+              <div class="group-bar"><i style="width:19.25%; background:#5477C4;"></i></div>
+              <div class="group-foot">收入占 11.0% · 未付率 0.0% · 未付占 0.0%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="risk" data-drill-value="中风险未付" data-drill-label="中风险未付">
+              <div class="group-top">
+                <span class="dot" style="background:#71B436"></span>
+                <strong>中风险未付</strong>
+                <em>11 客户</em>
+              </div>
+              <div class="group-main">
+                <span>15.93万</span>
+                <b>未付 1.86万</b>
+              </div>
+              <div class="group-bar"><i style="width:10.19%; background:#71B436;"></i></div>
+              <div class="group-foot">收入占 5.8% · 未付率 11.7% · 未付占 2.1%</div>
+            </button>
+            </div></div>
+      <div class="card"><h2>客户类型结构</h2><div class="group-list">
+            <button class="group-card drillable" data-drill-field="type" data-drill-value="日本同行客户" data-drill-label="日本同行客户">
+              <div class="group-top">
+                <span class="dot" style="background:#5477C4"></span>
+                <strong>日本同行客户</strong>
+                <em>68 客户</em>
+              </div>
+              <div class="group-main">
+                <span>195.64万</span>
+                <b>未付 63.57万</b>
+              </div>
+              <div class="group-bar"><i style="width:100.00%; background:#5477C4;"></i></div>
+              <div class="group-foot">收入占 71.3% · 未付率 32.5% · 未付占 71.4%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="type" data-drill-value="日本直客客户" data-drill-label="日本直客客户">
+              <div class="group-top">
+                <span class="dot" style="background:#71B436"></span>
+                <strong>日本直客客户</strong>
+                <em>78 客户</em>
+              </div>
+              <div class="group-main">
+                <span>78.52万</span>
+                <b>未付 25.45万</b>
+              </div>
+              <div class="group-bar"><i style="width:40.13%; background:#71B436;"></i></div>
+              <div class="group-foot">收入占 28.6% · 未付率 32.4% · 未付占 28.6%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="type" data-drill-value="未填写" data-drill-label="未填写">
+              <div class="group-top">
+                <span class="dot" style="background:#B8A037"></span>
+                <strong>未填写</strong>
+                <em>1 客户</em>
+              </div>
+              <div class="group-main">
+                <span>0.10万</span>
+                <b>未付 0.00万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#B8A037;"></i></div>
+              <div class="group-foot">收入占 0.0% · 未付率 0.0% · 未付占 0.0%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="type" data-drill-value="（特殊）同行美国和日本" data-drill-label="（特殊）同行美国和日本">
+              <div class="group-top">
+                <span class="dot" style="background:#C5CAD3"></span>
+                <strong>（特殊）同行美国和日本</strong>
+                <em>1 客户</em>
+              </div>
+              <div class="group-main">
+                <span>0.05万</span>
+                <b>未付 0.05万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#C5CAD3;"></i></div>
+              <div class="group-foot">收入占 0.0% · 未付率 100.0% · 未付占 0.1%</div>
+            </button>
+            </div></div>
+      <div class="card"><h2>结算方式结构</h2><div class="group-list">
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="预付" data-drill-label="预付">
+              <div class="group-top">
+                <span class="dot" style="background:#5477C4"></span>
+                <strong>预付</strong>
+                <em>130 客户</em>
+              </div>
+              <div class="group-main">
+                <span>209.46万</span>
+                <b>未付 44.69万</b>
+              </div>
+              <div class="group-bar"><i style="width:100.00%; background:#5477C4;"></i></div>
+              <div class="group-foot">收入占 76.4% · 未付率 21.3% · 未付占 50.2%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="月结" data-drill-label="月结">
+              <div class="group-top">
+                <span class="dot" style="background:#B8A037"></span>
+                <strong>月结</strong>
+                <em>8 客户</em>
+              </div>
+              <div class="group-main">
+                <span>40.27万</span>
+                <b>未付 27.10万</b>
+              </div>
+              <div class="group-bar"><i style="width:19.22%; background:#B8A037;"></i></div>
+              <div class="group-foot">收入占 14.7% · 未付率 67.3% · 未付占 30.4%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="周结" data-drill-label="周结">
+              <div class="group-top">
+                <span class="dot" style="background:#CC6F47"></span>
+                <strong>周结</strong>
+                <em>2 客户</em>
+              </div>
+              <div class="group-main">
+                <span>14.90万</span>
+                <b>未付 14.05万</b>
+              </div>
+              <div class="group-bar"><i style="width:7.11%; background:#CC6F47;"></i></div>
+              <div class="group-foot">收入占 5.4% · 未付率 94.3% · 未付占 15.8%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="现结" data-drill-label="现结">
+              <div class="group-top">
+                <span class="dot" style="background:#71B436"></span>
+                <strong>现结</strong>
+                <em>2 客户</em>
+              </div>
+              <div class="group-main">
+                <span>2.86万</span>
+                <b>未付 0.08万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#71B436;"></i></div>
+              <div class="group-foot">收入占 1.0% · 未付率 2.9% · 未付占 0.1%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="半月结" data-drill-label="半月结">
+              <div class="group-top">
+                <span class="dot" style="background:#BD569B"></span>
+                <strong>半月结</strong>
+                <em>1 客户</em>
+              </div>
+              <div class="group-main">
+                <span>2.79万</span>
+                <b>未付 1.96万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#BD569B;"></i></div>
+              <div class="group-foot">收入占 1.0% · 未付率 70.4% · 未付占 2.2%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="签收付款" data-drill-label="签收付款">
+              <div class="group-top">
+                <span class="dot" style="background:#C5CAD3"></span>
+                <strong>签收付款</strong>
+                <em>3 客户</em>
+              </div>
+              <div class="group-main">
+                <span>2.59万</span>
+                <b>未付 0.93万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#C5CAD3;"></i></div>
+              <div class="group-foot">收入占 0.9% · 未付率 35.8% · 未付占 1.0%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="到港付款" data-drill-label="到港付款">
+              <div class="group-top">
+                <span class="dot" style="background:#A3BEFA"></span>
+                <strong>到港付款</strong>
+                <em>1 客户</em>
+              </div>
+              <div class="group-main">
+                <span>1.32万</span>
+                <b>未付 0.26万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#A3BEFA;"></i></div>
+              <div class="group-foot">收入占 0.5% · 未付率 19.4% · 未付占 0.3%</div>
+            </button>
+            
+
+            <button class="group-card drillable" data-drill-field="payment" data-drill-value="见转单付款" data-drill-label="见转单付款">
+              <div class="group-top">
+                <span class="dot" style="background:#F0986E"></span>
+                <strong>见转单付款</strong>
+                <em>1 客户</em>
+              </div>
+              <div class="group-main">
+                <span>0.13万</span>
+                <b>未付 0.00万</b>
+              </div>
+              <div class="group-bar"><i style="width:4.00%; background:#F0986E;"></i></div>
+              <div class="group-foot">收入占 0.0% · 未付率 0.0% · 未付占 0.0%</div>
+            </button>
+            </div></div>
+    </section>
+
+    <section class="grid two">
+      <div class="card"><h2>营业额 Top 12</h2><p>看客户价值和收入依赖度。点击客户可查看单客户详情。</p>
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t956691" data-drill-label="客户：t956691">
+              <div class="bar-label"><strong>t956691</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:100.00%; background:#5477C4;"></div></div>
+              <div class="bar-value">68.15万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t901854" data-drill-label="客户：t901854">
+              <div class="bar-label"><strong>t901854</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:35.16%; background:#5477C4;"></div></div>
+              <div class="bar-value">23.96万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t044669" data-drill-label="客户：t044669">
+              <div class="bar-label"><strong>t044669</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:20.56%; background:#5477C4;"></div></div>
+              <div class="bar-value">14.01万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t829060" data-drill-label="客户：t829060">
+              <div class="bar-label"><strong>t829060</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:20.02%; background:#5477C4;"></div></div>
+              <div class="bar-value">13.64万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="z085339" data-drill-label="客户：z085339">
+              <div class="bar-label"><strong>z085339</strong><span>日本直客客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:19.14%; background:#5477C4;"></div></div>
+              <div class="bar-value">13.04万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="z931682" data-drill-label="客户：z931682">
+              <div class="bar-label"><strong>z931682</strong><span>日本直客客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:12.46%; background:#5477C4;"></div></div>
+              <div class="bar-value">8.49万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="z530301" data-drill-label="客户：z530301">
+              <div class="bar-label"><strong>z530301</strong><span>日本直客客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:9.43%; background:#5477C4;"></div></div>
+              <div class="bar-value">6.43万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t988704" data-drill-label="客户：t988704">
+              <div class="bar-label"><strong>t988704</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:8.35%; background:#5477C4;"></div></div>
+              <div class="bar-value">5.69万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t907797" data-drill-label="客户：t907797">
+              <div class="bar-label"><strong>t907797</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:8.08%; background:#5477C4;"></div></div>
+              <div class="bar-value">5.50万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t082139" data-drill-label="客户：t082139">
+              <div class="bar-label"><strong>t082139</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:7.32%; background:#5477C4;"></div></div>
+              <div class="bar-value">4.99万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t391665" data-drill-label="客户：t391665">
+              <div class="bar-label"><strong>t391665</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:6.74%; background:#5477C4;"></div></div>
+              <div class="bar-value">4.59万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t925040" data-drill-label="客户：t925040">
+              <div class="bar-label"><strong>t925040</strong><span>日本同行客户</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:5.16%; background:#5477C4;"></div></div>
+              <div class="bar-value">3.52万</div>
+            </button>
+            </div>
+      <div class="card"><h2>未支付 Top 12</h2><p>看回款优先级。前 12 个客户占未支付金额 69.2%。</p>
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t044669" data-drill-label="客户：t044669">
+              <div class="bar-label"><strong>t044669</strong><span>月结</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:100.00%; background:#CC6F47;"></div></div>
+              <div class="bar-value">13.70万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t829060" data-drill-label="客户：t829060">
+              <div class="bar-label"><strong>t829060</strong><span>周结</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:99.25%; background:#CC6F47;"></div></div>
+              <div class="bar-value">13.60万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="z085339" data-drill-label="客户：z085339">
+              <div class="bar-label"><strong>z085339</strong><span>月结</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:59.92%; background:#CC6F47;"></div></div>
+              <div class="bar-value">8.21万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t901854" data-drill-label="客户：t901854">
+              <div class="bar-label"><strong>t901854</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:43.60%; background:#CC6F47;"></div></div>
+              <div class="bar-value">5.97万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t082139" data-drill-label="客户：t082139">
+              <div class="bar-label"><strong>t082139</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:25.19%; background:#CC6F47;"></div></div>
+              <div class="bar-value">3.45万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t988704" data-drill-label="客户：t988704">
+              <div class="bar-label"><strong>t988704</strong><span>月结</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:20.05%; background:#CC6F47;"></div></div>
+              <div class="bar-value">2.75万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="z931682" data-drill-label="客户：z931682">
+              <div class="bar-label"><strong>z931682</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:19.83%; background:#CC6F47;"></div></div>
+              <div class="bar-value">2.72万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t956691" data-drill-label="客户：t956691">
+              <div class="bar-label"><strong>t956691</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:19.29%; background:#CC6F47;"></div></div>
+              <div class="bar-value">2.64万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t391665" data-drill-label="客户：t391665">
+              <div class="bar-label"><strong>t391665</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:17.93%; background:#CC6F47;"></div></div>
+              <div class="bar-value">2.46万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t081173" data-drill-label="客户：t081173">
+              <div class="bar-label"><strong>t081173</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:16.72%; background:#CC6F47;"></div></div>
+              <div class="bar-value">2.29万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="t466361" data-drill-label="客户：t466361">
+              <div class="bar-label"><strong>t466361</strong><span>半月结</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:14.32%; background:#CC6F47;"></div></div>
+              <div class="bar-value">1.96万</div>
+            </button>
+            
+
+            <button class="bar-row drillable" data-drill-field="user" data-drill-value="z530301" data-drill-label="客户：z530301">
+              <div class="bar-label"><strong>z530301</strong><span>预付</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:13.60%; background:#CC6F47;"></div></div>
+              <div class="bar-value">1.86万</div>
+            </button>
+            </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>价值分层明细</h2>
+        <table class="matrix"><thead><tr><th>分层</th><th>客户数</th><th>营业额</th><th>占比</th><th>未支付</th><th>未支付率</th></tr></thead><tbody>
+            <tr class="drillable" data-drill-field="segment" data-drill-value="高价值需回款跟进" data-drill-label="高价值需回款跟进">
+              <td>高价值需回款跟进</td>
+              <td>24</td>
+              <td>137.56万</td>
+              <td>50.1%</td>
+              <td>71.74万</td>
+              <td>52.1%</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="segment" data-drill-value="核心高价值" data-drill-label="核心高价值">
+              <td>核心高价值</td>
+              <td>6</td>
+              <td>80.62万</td>
+              <td>29.4%</td>
+              <td>2.73万</td>
+              <td>3.4%</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="segment" data-drill-value="中腰部需跟进" data-drill-label="中腰部需跟进">
+              <td>中腰部需跟进</td>
+              <td>31</td>
+              <td>31.30万</td>
+              <td>11.4%</td>
+              <td>12.22万</td>
+              <td>39.0%</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="segment" data-drill-value="中腰部稳定" data-drill-label="中腰部稳定">
+              <td>中腰部稳定</td>
+              <td>13</td>
+              <td>11.55万</td>
+              <td>4.2%</td>
+              <td>0.03万</td>
+              <td>0.3%</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="segment" data-drill-value="低贡献/待激活" data-drill-label="低贡献/待激活">
+              <td>低贡献/待激活</td>
+              <td>58</td>
+              <td>9.98万</td>
+              <td>3.6%</td>
+              <td>0.00万</td>
+              <td>0.0%</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="segment" data-drill-value="低贡献且有风险" data-drill-label="低贡献且有风险">
+              <td>低贡献且有风险</td>
+              <td>16</td>
+              <td>3.32万</td>
+              <td>1.2%</td>
+              <td>2.36万</td>
+              <td>71.3%</td>
+            </tr>
+            </tbody></table>
+      </div>
+      <div class="card">
+        <h2>本周重点回款客户</h2>
+        <table class="matrix"><thead><tr><th>客户</th><th>未支付</th><th>未支付率</th><th>营业额</th><th>方式</th></tr></thead><tbody>
+            <tr class="drillable" data-drill-field="user" data-drill-value="t044669" data-drill-label="客户：t044669">
+              <td><span class="tag hot">t044669</span></td>
+              <td>13.70万</td>
+              <td>97.8%</td>
+              <td>14.01万</td>
+              <td>月结</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t829060" data-drill-label="客户：t829060">
+              <td><span class="tag hot">t829060</span></td>
+              <td>13.60万</td>
+              <td>99.6%</td>
+              <td>13.64万</td>
+              <td>周结</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="z085339" data-drill-label="客户：z085339">
+              <td><span class="tag hot">z085339</span></td>
+              <td>8.21万</td>
+              <td>62.9%</td>
+              <td>13.04万</td>
+              <td>月结</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t901854" data-drill-label="客户：t901854">
+              <td><span class="tag hot">t901854</span></td>
+              <td>5.97万</td>
+              <td>24.9%</td>
+              <td>23.96万</td>
+              <td>预付</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t082139" data-drill-label="客户：t082139">
+              <td><span class="tag hot">t082139</span></td>
+              <td>3.45万</td>
+              <td>69.2%</td>
+              <td>4.99万</td>
+              <td>预付</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t988704" data-drill-label="客户：t988704">
+              <td><span class="tag hot">t988704</span></td>
+              <td>2.75万</td>
+              <td>48.2%</td>
+              <td>5.69万</td>
+              <td>月结</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="z931682" data-drill-label="客户：z931682">
+              <td><span class="tag hot">z931682</span></td>
+              <td>2.72万</td>
+              <td>32.0%</td>
+              <td>8.49万</td>
+              <td>预付</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t391665" data-drill-label="客户：t391665">
+              <td><span class="tag hot">t391665</span></td>
+              <td>2.46万</td>
+              <td>53.5%</td>
+              <td>4.59万</td>
+              <td>预付</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t081173" data-drill-label="客户：t081173">
+              <td><span class="tag hot">t081173</span></td>
+              <td>2.29万</td>
+              <td>70.5%</td>
+              <td>3.25万</td>
+              <td>预付</td>
+            </tr>
+            
+
+            <tr class="drillable" data-drill-field="user" data-drill-value="t466361" data-drill-label="客户：t466361">
+              <td><span class="tag hot">t466361</span></td>
+              <td>1.96万</td>
+              <td>70.4%</td>
+              <td>2.79万</td>
+              <td>半月结</td>
+            </tr>
+            </tbody></table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>客户明细表</h2>
+      <div class="toolbar">
+        <input id="search" placeholder="搜索客户、编码、类型、结算方式、建议">
+        <select id="segmentFilter"><option value="">全部价值分层</option></select>
+        <select id="riskFilter"><option value="">全部风险层级</option></select>
+        <select id="statusFilter"><option value="">全部客户状态</option></select>
+        <button id="unpaidOnly">只看有未付</button>
+        <button id="focusOnly">只看本周重点</button>
+        <button id="testOnly">只看疑似测试</button>
+        <button id="reset">重置</button>
+      </div>
+      <div class="table-wrap">
+        <table class="detail" id="detailTable">
+          <thead><tr><th>用户</th><th>用户编码</th><th>客户状态</th><th>业务员</th><th>用户等级</th><th>结算方式</th><th>营业额</th><th>营业额占比</th><th>已支付</th><th>未支付</th><th>未支付率</th><th>待出账单</th><th>待付账单</th><th>账户实际余额</th><th>评分</th><th>价值分层</th><th>风险层级</th><th>回款建议</th></tr></thead>
+          <tbody>
+            <tr data-user="t956691" data-status="未知" data-sales="方涛" data-risk="低风险未付" data-action="常规跟进" data-segment="核心高价值" data-type="日本同行客户" data-payment="预付" data-revenue="681469.70" data-paid="655049.70" data-unpaid="26420.00" data-unbilled="26420.00" data-payable="0.00" data-balance="0.00" data-score="98.3" data-test="false">
+              <td>t956691</td><td>100378</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>681,469.70</td><td>24.8%</td><td>655,049.70</td><td>26,420.00</td><td>3.9%</td><td>26,420.00</td><td>0.00</td><td>0.00</td><td>98.3</td><td>核心高价值</td><td>低风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="z717211" data-status="未知" data-sales="方涛" data-risk="低风险未付" data-action="常规跟进" data-segment="核心高价值" data-type="日本直客客户" data-payment="现结" data-revenue="27936.00" data-paid="27100.00" data-unpaid="836.00" data-unbilled="836.00" data-payable="0.00" data-balance="0.00" data-score="90.7" data-test="false">
+              <td>z717211</td><td>100006</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>现结</td><td>27,936.00</td><td>1.0%</td><td>27,100.00</td><td>836.00</td><td>3.0%</td><td>836.00</td><td>0.00</td><td>0.00</td><td>90.7</td><td>核心高价值</td><td>低风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="t066612" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="14378.00" data-paid="13013.00" data-unpaid="1365.00" data-unbilled="1365.00" data-payable="0.00" data-balance="0.00" data-score="79.9" data-test="false">
+              <td>t066612</td><td>100459</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>14,378.00</td><td>0.5%</td><td>13,013.00</td><td>1,365.00</td><td>9.5%</td><td>1,365.00</td><td>0.00</td><td>0.00</td><td>79.9</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="t549328" data-status="未知" data-sales="饶先喜" data-risk="低风险未付" data-action="常规跟进" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="11205.00" data-paid="10897.00" data-unpaid="308.00" data-unbilled="308.00" data-payable="0.00" data-balance="0.00" data-score="79.0" data-test="false">
+              <td>t549328</td><td>100137</td><td>未知</td><td>饶先喜</td><td>日本同行客户</td><td>预付</td><td>11,205.00</td><td>0.4%</td><td>10,897.00</td><td>308.00</td><td>2.7%</td><td>308.00</td><td>0.00</td><td>0.00</td><td>79.0</td><td>中腰部稳定</td><td>低风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="t368096" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="到港付款" data-revenue="13240.00" data-paid="10675.00" data-unpaid="2565.00" data-unbilled="0.00" data-payable="2565.00" data-balance="-2565.00" data-score="73.3" data-test="false">
+              <td>t368096</td><td>100004</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>到港付款</td><td>13,240.00</td><td>0.5%</td><td>10,675.00</td><td>2,565.00</td><td>19.4%</td><td>0.00</td><td>2,565.00</td><td>-2,565.00</td><td>73.3</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="z426727" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="7637.00" data-paid="7175.00" data-unpaid="462.00" data-unbilled="462.00" data-payable="0.00" data-balance="0.00" data-score="72.7" data-test="false">
+              <td>z426727</td><td>100521</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>7,637.00</td><td>0.3%</td><td>7,175.00</td><td>462.00</td><td>6.0%</td><td>462.00</td><td>0.00</td><td>0.00</td><td>72.7</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="z557828" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="9121.00" data-paid="7905.00" data-unpaid="1216.00" data-unbilled="1216.00" data-payable="0.00" data-balance="0.00" data-score="71.2" data-test="false">
+              <td>z557828</td><td>100372</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>9,121.00</td><td>0.3%</td><td>7,905.00</td><td>1,216.00</td><td>13.3%</td><td>1,216.00</td><td>0.00</td><td>0.00</td><td>71.2</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="z437540" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="6298.00" data-paid="5542.00" data-unpaid="756.00" data-unbilled="756.00" data-payable="0.00" data-balance="0.00" data-score="67.4" data-test="false">
+              <td>z437540</td><td>100523</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>6,298.00</td><td>0.2%</td><td>5,542.00</td><td>756.00</td><td>12.0%</td><td>756.00</td><td>0.00</td><td>0.00</td><td>67.4</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="z473116" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="6152.64" data-paid="5244.13" data-unpaid="908.51" data-unbilled="908.51" data-payable="0.00" data-balance="0.00" data-score="65.7" data-test="false">
+              <td>z473116</td><td>100242</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>6,152.64</td><td>0.2%</td><td>5,244.13</td><td>908.51</td><td>14.8%</td><td>908.51</td><td>0.00</td><td>0.00</td><td>65.7</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="t998601" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="4549.00" data-paid="3813.00" data-unpaid="736.00" data-unbilled="736.00" data-payable="0.00" data-balance="5.00" data-score="61.1" data-test="false">
+              <td>t998601</td><td>100551</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>4,549.00</td><td>0.2%</td><td>3,813.00</td><td>736.00</td><td>16.2%</td><td>736.00</td><td>0.00</td><td>5.00</td><td>61.1</td><td>中腰部需跟进</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="z887021" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="常规跟进" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="3234.00" data-paid="2728.00" data-unpaid="506.00" data-unbilled="506.00" data-payable="0.00" data-balance="0.00" data-score="55.6" data-test="false">
+              <td>z887021</td><td>100515</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>3,234.00</td><td>0.1%</td><td>2,728.00</td><td>506.00</td><td>15.6%</td><td>506.00</td><td>0.00</td><td>0.00</td><td>55.6</td><td>低贡献且有风险</td><td>中风险未付</td><td>常规跟进</td>
+            </tr>
+            
+
+            <tr data-user="t663114" data-status="未知" data-sales="方涛" data-risk="中风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="33822.00" data-paid="31068.00" data-unpaid="2754.00" data-unbilled="2754.00" data-payable="0.00" data-balance="0.00" data-score="91.1" data-test="false">
+              <td>t663114</td><td>100336</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>33,822.00</td><td>1.2%</td><td>31,068.00</td><td>2,754.00</td><td>8.1%</td><td>2,754.00</td><td>0.00</td><td>0.00</td><td>91.1</td><td>高价值需回款跟进</td><td>中风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t901854" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="239586.00" data-paid="179860.00" data-unpaid="59726.00" data-unbilled="59726.00" data-payable="0.00" data-balance="0.00" data-score="88.3" data-test="false">
+              <td>t901854</td><td>100176</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>239,586.00</td><td>8.7%</td><td>179,860.00</td><td>59,726.00</td><td>24.9%</td><td>59,726.00</td><td>0.00</td><td>0.00</td><td>88.3</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t063991" data-status="未知" data-sales="徐书贤" data-risk="中风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="25666.00" data-paid="23918.00" data-unpaid="1748.00" data-unbilled="0.00" data-payable="1748.00" data-balance="-1748.00" data-score="88.2" data-test="false">
+              <td>t063991</td><td>100453</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>25,666.00</td><td>0.9%</td><td>23,918.00</td><td>1,748.00</td><td>6.8%</td><td>0.00</td><td>1,748.00</td><td>-1,748.00</td><td>88.2</td><td>高价值需回款跟进</td><td>中风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t925040" data-status="未知" data-sales="徐书贤" data-risk="中风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="35196.00" data-paid="29652.00" data-unpaid="5544.00" data-unbilled="5544.00" data-payable="0.00" data-balance="0.00" data-score="88.1" data-test="false">
+              <td>t925040</td><td>100094</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>35,196.00</td><td>1.3%</td><td>29,652.00</td><td>5,544.00</td><td>15.8%</td><td>5,544.00</td><td>0.00</td><td>0.00</td><td>88.1</td><td>高价值需回款跟进</td><td>中风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z530301" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="预付" data-revenue="64285.94" data-paid="45650.77" data-unpaid="18635.17" data-unbilled="18635.17" data-payable="0.00" data-balance="0.00" data-score="84.3" data-test="false">
+              <td>z530301</td><td>100102</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>64,285.94</td><td>2.3%</td><td>45,650.77</td><td>18,635.17</td><td>29.0%</td><td>18,635.17</td><td>0.00</td><td>0.00</td><td>84.3</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t907797" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="55033.00" data-paid="39542.00" data-unpaid="15491.00" data-unbilled="9786.00" data-payable="5705.00" data-balance="-5705.00" data-score="83.8" data-test="false">
+              <td>t907797</td><td>100156</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>55,033.00</td><td>2.0%</td><td>39,542.00</td><td>15,491.00</td><td>28.1%</td><td>9,786.00</td><td>5,705.00</td><td>-5,705.00</td><td>83.8</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z931682" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="预付" data-revenue="84933.03" data-paid="57766.89" data-unpaid="27166.14" data-unbilled="27166.14" data-payable="0.00" data-balance="0.00" data-score="83.4" data-test="false">
+              <td>z931682</td><td>100343</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>84,933.03</td><td>3.1%</td><td>57,766.89</td><td>27,166.14</td><td>32.0%</td><td>27,166.14</td><td>0.00</td><td>0.00</td><td>83.4</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z210845" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="预付" data-revenue="30559.00" data-paid="22380.00" data-unpaid="8179.00" data-unbilled="8179.00" data-payable="0.00" data-balance="0.00" data-score="80.5" data-test="false">
+              <td>z210845</td><td>100499</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>30,559.00</td><td>1.1%</td><td>22,380.00</td><td>8,179.00</td><td>26.8%</td><td>8,179.00</td><td>0.00</td><td>0.00</td><td>80.5</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z912702" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="预付" data-revenue="33329.00" data-paid="21881.00" data-unpaid="11448.00" data-unbilled="9086.00" data-payable="2362.00" data-balance="-2362.00" data-score="78.8" data-test="false">
+              <td>z912702</td><td>100101</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>33,329.00</td><td>1.2%</td><td>21,881.00</td><td>11,448.00</td><td>34.3%</td><td>9,086.00</td><td>2,362.00</td><td>-2,362.00</td><td>78.8</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z989081" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="预付" data-revenue="32063.02" data-paid="19247.74" data-unpaid="12815.28" data-unbilled="12815.28" data-payable="0.00" data-balance="0.00" data-score="75.4" data-test="false">
+              <td>z989081</td><td>100468</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>32,063.02</td><td>1.2%</td><td>19,247.74</td><td>12,815.28</td><td>40.0%</td><td>12,815.28</td><td>0.00</td><td>0.00</td><td>75.4</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t988704" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="月结" data-revenue="56922.00" data-paid="29460.00" data-unpaid="27462.00" data-unbilled="16392.00" data-payable="11070.00" data-balance="-11070.00" data-score="75.2" data-test="false">
+              <td>t988704</td><td>100026</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>月结</td><td>56,922.00</td><td>2.1%</td><td>29,460.00</td><td>27,462.00</td><td>48.2%</td><td>16,392.00</td><td>11,070.00</td><td>-11,070.00</td><td>75.2</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t189829" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="17703.00" data-paid="12472.00" data-unpaid="5231.00" data-unbilled="5231.00" data-payable="0.00" data-balance="0.00" data-score="74.8" data-test="false">
+              <td>t189829</td><td>100118</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>17,703.00</td><td>0.6%</td><td>12,472.00</td><td>5,231.00</td><td>29.5%</td><td>5,231.00</td><td>0.00</td><td>0.00</td><td>74.8</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z085339" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="月结" data-revenue="130430.00" data-paid="48344.00" data-unpaid="82086.00" data-unbilled="82086.00" data-payable="0.00" data-balance="0.01" data-score="72.5" data-test="false">
+              <td>z085339</td><td>100065</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>月结</td><td>130,430.00</td><td>4.8%</td><td>48,344.00</td><td>82,086.00</td><td>62.9%</td><td>82,086.00</td><td>0.00</td><td>0.01</td><td>72.5</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t391665" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="45908.00" data-paid="21348.00" data-unpaid="24560.00" data-unbilled="4987.00" data-payable="19573.00" data-balance="-19573.00" data-score="72.2" data-test="false">
+              <td>t391665</td><td>100305</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>45,908.00</td><td>1.7%</td><td>21,348.00</td><td>24,560.00</td><td>53.5%</td><td>4,987.00</td><td>19,573.00</td><td>-19,573.00</td><td>72.2</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t082139" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="49852.00" data-paid="15347.00" data-unpaid="34505.00" data-unbilled="9579.00" data-payable="24926.00" data-balance="-24926.00" data-score="68.7" data-test="false">
+              <td>t082139</td><td>100248</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>49,852.00</td><td>1.8%</td><td>15,347.00</td><td>34,505.00</td><td>69.2%</td><td>9,579.00</td><td>24,926.00</td><td>-24,926.00</td><td>68.7</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t024406" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="24609.00" data-paid="12556.00" data-unpaid="12053.00" data-unbilled="3509.00" data-payable="8544.00" data-balance="-8544.00" data-score="67.9" data-test="false">
+              <td>t024406</td><td>100293</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>24,609.00</td><td>0.9%</td><td>12,556.00</td><td>12,053.00</td><td>49.0%</td><td>3,509.00</td><td>8,544.00</td><td>-8,544.00</td><td>67.9</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z029669" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本直客客户" data-payment="月结" data-revenue="25639.64" data-paid="11762.00" data-unpaid="13877.64" data-unbilled="6819.77" data-payable="7057.87" data-balance="-7057.87" data-score="67.2" data-test="false">
+              <td>z029669</td><td>100370</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>月结</td><td>25,639.64</td><td>0.9%</td><td>11,762.00</td><td>13,877.64</td><td>54.1%</td><td>6,819.77</td><td>7,057.87</td><td>-7,057.87</td><td>67.2</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t081173" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="32501.00" data-paid="9604.00" data-unpaid="22897.00" data-unbilled="15462.00" data-payable="7435.00" data-balance="-7435.00" data-score="66.2" data-test="false">
+              <td>t081173</td><td>100450</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>32,501.00</td><td>1.2%</td><td>9,604.00</td><td>22,897.00</td><td>70.5%</td><td>15,462.00</td><td>7,435.00</td><td>-7,435.00</td><td>66.2</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t044669" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="月结" data-revenue="140126.00" data-paid="3143.00" data-unpaid="136983.00" data-unbilled="11040.00" data-payable="125943.00" data-balance="-125559.10" data-score="64.7" data-test="false">
+              <td>t044669</td><td>100029</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>月结</td><td>140,126.00</td><td>5.1%</td><td>3,143.00</td><td>136,983.00</td><td>97.8%</td><td>11,040.00</td><td>125,943.00</td><td>-125,559.10</td><td>64.7</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t466361" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="半月结" data-revenue="27864.00" data-paid="8250.00" data-unpaid="19614.00" data-unbilled="0.00" data-payable="19614.00" data-balance="-19614.00" data-score="64.1" data-test="false">
+              <td>t466361</td><td>100069</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>半月结</td><td>27,864.00</td><td>1.0%</td><td>8,250.00</td><td>19,614.00</td><td>70.4%</td><td>0.00</td><td>19,614.00</td><td>-19,614.00</td><td>64.1</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t829060" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="周结" data-revenue="136446.00" data-paid="493.00" data-unpaid="135953.00" data-unbilled="19008.00" data-payable="116945.00" data-balance="-116945.00" data-score="63.8" data-test="false">
+              <td>t829060</td><td>100122</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>周结</td><td>136,446.00</td><td>5.0%</td><td>493.00</td><td>135,953.00</td><td>99.6%</td><td>19,008.00</td><td>116,945.00</td><td>-116,945.00</td><td>63.8</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t307569" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="16755.00" data-paid="7172.00" data-unpaid="9583.00" data-unbilled="4557.00" data-payable="5026.00" data-balance="-4061.66" data-score="63.0" data-test="false">
+              <td>t307569</td><td>100125</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>16,755.00</td><td>0.6%</td><td>7,172.00</td><td>9,583.00</td><td>57.2%</td><td>4,557.00</td><td>5,026.00</td><td>-4,061.66</td><td>63.0</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t203223" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="18739.00" data-paid="6664.00" data-unpaid="12075.00" data-unbilled="2772.00" data-payable="9303.00" data-balance="-9303.00" data-score="62.5" data-test="false">
+              <td>t203223</td><td>100362</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>18,739.00</td><td>0.7%</td><td>6,664.00</td><td>12,075.00</td><td>64.4%</td><td>2,772.00</td><td>9,303.00</td><td>-9,303.00</td><td>62.5</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="t533387" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="本周重点跟进" data-segment="高价值需回款跟进" data-type="日本同行客户" data-payment="预付" data-revenue="17656.00" data-paid="690.00" data-unpaid="16966.00" data-unbilled="16966.00" data-payable="0.00" data-balance="0.00" data-score="53.7" data-test="false">
+              <td>t533387</td><td>100414</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>17,656.00</td><td>0.6%</td><td>690.00</td><td>16,966.00</td><td>96.1%</td><td>16,966.00</td><td>0.00</td><td>0.00</td><td>53.7</td><td>高价值需回款跟进</td><td>高风险未付</td><td>本周重点跟进</td>
+            </tr>
+            
+
+            <tr data-user="z131460" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="核心高价值" data-type="日本直客客户" data-payment="预付" data-revenue="31081.84" data-paid="31081.84" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="93.0" data-test="false">
+              <td>z131460</td><td>100433</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>31,081.84</td><td>1.1%</td><td>31,081.84</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>93.0</td><td>核心高价值</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t673593" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="核心高价值" data-type="日本同行客户" data-payment="预付" data-revenue="24627.00" data-paid="24627.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="90.3" data-test="false">
+              <td>t673593</td><td>100174</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>24,627.00</td><td>0.9%</td><td>24,627.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>90.3</td><td>核心高价值</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t609749" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="核心高价值" data-type="日本同行客户" data-payment="月结" data-revenue="20554.00" data-paid="20554.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="89.5" data-test="false">
+              <td>t609749</td><td>100023</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>月结</td><td>20,554.00</td><td>0.7%</td><td>20,554.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>89.5</td><td>核心高价值</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z922886" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="核心高价值" data-type="日本直客客户" data-payment="预付" data-revenue="20490.55" data-paid="20490.55" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="89.0" data-test="false">
+              <td>z922886</td><td>100511</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>20,490.55</td><td>0.7%</td><td>20,490.55</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>89.0</td><td>核心高价值</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z677003" data-status="未知" data-sales="张定贵" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本直客客户" data-payment="预付" data-revenue="15199.83" data-paid="15199.83" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="85.5" data-test="false">
+              <td>z677003</td><td>100520</td><td>未知</td><td>张定贵</td><td>日本直客客户</td><td>预付</td><td>15,199.83</td><td>0.6%</td><td>15,199.83</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>85.5</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t434648" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="13744.00" data-paid="13744.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="82.9" data-test="false">
+              <td>t434648</td><td>100061</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>13,744.00</td><td>0.5%</td><td>13,744.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>82.9</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t444375" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="11390.00" data-paid="11390.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="80.7" data-test="false">
+              <td>t444375</td><td>100436</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>11,390.00</td><td>0.4%</td><td>11,390.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>80.7</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t310644" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="10750.00" data-paid="10750.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="78.5" data-test="false">
+              <td>t310644</td><td>100064</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>10,750.00</td><td>0.4%</td><td>10,750.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>78.5</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z232826" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本直客客户" data-payment="预付" data-revenue="9255.50" data-paid="9255.50" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="77.6" data-test="false">
+              <td>z232826</td><td>100525</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>9,255.50</td><td>0.3%</td><td>9,255.50</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>77.6</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z841153" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本直客客户" data-payment="预付" data-revenue="8458.00" data-paid="8458.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="76.7" data-test="false">
+              <td>z841153</td><td>100552</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>8,458.00</td><td>0.3%</td><td>8,458.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>76.7</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z807887" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本直客客户" data-payment="预付" data-revenue="7302.00" data-paid="7302.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="74.5" data-test="false">
+              <td>z807887</td><td>100092</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>7,302.00</td><td>0.3%</td><td>7,302.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>74.5</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t200039" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="7242.00" data-paid="7242.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="73.6" data-test="false">
+              <td>t200039</td><td>100464</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>7,242.00</td><td>0.3%</td><td>7,242.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>73.6</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z576128" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本直客客户" data-payment="预付" data-revenue="5540.27" data-paid="5540.27" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="71.5" data-test="false">
+              <td>z576128</td><td>100488</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>5,540.27</td><td>0.2%</td><td>5,540.27</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>71.5</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t262376" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="5478.00" data-paid="5478.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="71.0" data-test="false">
+              <td>t262376</td><td>100565</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>5,478.00</td><td>0.2%</td><td>5,478.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>71.0</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t895642" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本同行客户" data-payment="预付" data-revenue="5360.00" data-paid="5360.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="69.3" data-test="false">
+              <td>t895642</td><td>100556</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>5,360.00</td><td>0.2%</td><td>5,360.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>69.3</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z509989" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="中腰部稳定" data-type="日本直客客户" data-payment="预付" data-revenue="4534.77" data-paid="4534.77" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="67.9" data-test="false">
+              <td>z509989</td><td>100527</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>4,534.77</td><td>0.2%</td><td>4,534.77</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>67.9</td><td>中腰部稳定</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z189589" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="4461.00" data-paid="4461.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="67.5" data-test="false">
+              <td>z189589</td><td>100500</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>4,461.00</td><td>0.2%</td><td>4,461.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>67.5</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z433486" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="4429.00" data-paid="4429.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="67.1" data-test="false">
+              <td>z433486</td><td>100534</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>4,429.00</td><td>0.2%</td><td>4,429.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>67.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z375872" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="3927.00" data-paid="3927.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="66.6" data-test="false">
+              <td>z375872</td><td>100223</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>3,927.00</td><td>0.1%</td><td>3,927.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>66.6</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t740453" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="3780.00" data-paid="3780.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="65.7" data-test="false">
+              <td>t740453</td><td>100238</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>3,780.00</td><td>0.1%</td><td>3,780.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>65.7</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t518390" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="3752.00" data-paid="3752.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="65.3" data-test="false">
+              <td>t518390</td><td>100413</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>3,752.00</td><td>0.1%</td><td>3,752.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>65.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z974971" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="3687.14" data-paid="3687.14" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="64.9" data-test="false">
+              <td>z974971</td><td>100462</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>3,687.14</td><td>0.1%</td><td>3,687.14</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>64.9</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t774446" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="3680.00" data-paid="3680.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="64.4" data-test="false">
+              <td>t774446</td><td>100522</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>3,680.00</td><td>0.1%</td><td>3,680.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>64.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t683692" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="3366.50" data-paid="3366.50" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="64.0" data-test="false">
+              <td>t683692</td><td>100483</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>3,366.50</td><td>0.1%</td><td>3,366.50</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>64.0</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t222650" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="3320.00" data-paid="3320.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="63.5" data-test="false">
+              <td>t222650</td><td>100539</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>3,320.00</td><td>0.1%</td><td>3,320.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>63.5</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z837892" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="3303.00" data-paid="3303.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="63.1" data-test="false">
+              <td>z837892</td><td>100351</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>3,303.00</td><td>0.1%</td><td>3,303.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>63.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z861120" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="3176.75" data-paid="3176.75" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="62.2" data-test="false">
+              <td>z861120</td><td>100533</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>3,176.75</td><td>0.1%</td><td>3,176.75</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>62.2</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t490787" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="2816.00" data-paid="2816.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="61.4" data-test="false">
+              <td>t490787</td><td>100375</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>2,816.00</td><td>0.1%</td><td>2,816.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>61.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t217418" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="2723.00" data-paid="2723.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="60.5" data-test="false">
+              <td>t217418</td><td>100037</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>2,723.00</td><td>0.1%</td><td>2,723.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>60.5</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z276605" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="2664.00" data-paid="2664.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="59.2" data-test="false">
+              <td>z276605</td><td>100454</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>2,664.00</td><td>0.1%</td><td>2,664.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>59.2</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z229087" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="2606.61" data-paid="2606.61" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="58.3" data-test="false">
+              <td>z229087</td><td>100543</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>2,606.61</td><td>0.1%</td><td>2,606.61</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>58.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t642325" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="2572.00" data-paid="2572.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="57.8" data-test="false">
+              <td>t642325</td><td>100149</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>2,572.00</td><td>0.1%</td><td>2,572.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>57.8</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t494800" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="2522.00" data-paid="2522.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="57.4" data-test="false">
+              <td>t494800</td><td>100437</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>2,522.00</td><td>0.1%</td><td>2,522.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>57.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z745857" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="2018.00" data-paid="2018.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="56.5" data-test="false">
+              <td>z745857</td><td>100544</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>2,018.00</td><td>0.1%</td><td>2,018.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>56.5</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z363216" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="2016.00" data-paid="2016.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="56.1" data-test="false">
+              <td>z363216</td><td>100554</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>2,016.00</td><td>0.1%</td><td>2,016.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>56.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z275332" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1960.00" data-paid="1960.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="55.6" data-test="false">
+              <td>z275332</td><td>100391</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,960.00</td><td>0.1%</td><td>1,960.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>55.6</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z405400" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1845.00" data-paid="1845.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="54.3" data-test="false">
+              <td>z405400</td><td>100507</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,845.00</td><td>0.1%</td><td>1,845.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>54.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z649054" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1777.00" data-paid="1777.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="53.9" data-test="false">
+              <td>z649054</td><td>100269</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,777.00</td><td>0.1%</td><td>1,777.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>53.9</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t653969" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1748.00" data-paid="1748.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="53.4" data-test="false">
+              <td>t653969</td><td>100110</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,748.00</td><td>0.1%</td><td>1,748.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>53.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t561616" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1746.00" data-paid="1746.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="53.0" data-test="false">
+              <td>t561616</td><td>100530</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,746.00</td><td>0.1%</td><td>1,746.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>53.0</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z158616" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1737.00" data-paid="1737.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="52.6" data-test="false">
+              <td>z158616</td><td>100492</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,737.00</td><td>0.1%</td><td>1,737.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>52.6</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t959912" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1650.00" data-paid="1650.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="52.1" data-test="false">
+              <td>t959912</td><td>100549</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,650.00</td><td>0.1%</td><td>1,650.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>52.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t790801" data-status="未知" data-sales="饶先喜" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1544.00" data-paid="1544.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="51.7" data-test="false">
+              <td>t790801</td><td>100222</td><td>未知</td><td>饶先喜</td><td>日本同行客户</td><td>预付</td><td>1,544.00</td><td>0.1%</td><td>1,544.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>51.7</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t769982" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1491.00" data-paid="1491.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="50.8" data-test="false">
+              <td>t769982</td><td>100461</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,491.00</td><td>0.1%</td><td>1,491.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>50.8</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z350890" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1361.00" data-paid="1361.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="49.5" data-test="false">
+              <td>z350890</td><td>100347</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,361.00</td><td>0.0%</td><td>1,361.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>49.5</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t290432" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="见转单付款" data-revenue="1280.00" data-paid="1280.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="49.1" data-test="false">
+              <td>t290432</td><td>100368</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>见转单付款</td><td>1,280.00</td><td>0.0%</td><td>1,280.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>49.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z782944" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1277.00" data-paid="1277.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="48.6" data-test="false">
+              <td>z782944</td><td>100535</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,277.00</td><td>0.0%</td><td>1,277.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>48.6</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z129181" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1232.00" data-paid="1232.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="48.2" data-test="false">
+              <td>z129181</td><td>100074</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,232.00</td><td>0.0%</td><td>1,232.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>48.2</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t209364" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1151.00" data-paid="1151.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="47.7" data-test="false">
+              <td>t209364</td><td>100529</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,151.00</td><td>0.0%</td><td>1,151.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>47.7</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z499719" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1144.00" data-paid="1144.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="47.3" data-test="false">
+              <td>z499719</td><td>100309</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>1,144.00</td><td>0.0%</td><td>1,144.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>47.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z747370" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1113.00" data-paid="1113.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="46.9" data-test="false">
+              <td>z747370</td><td>100557</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,113.00</td><td>0.0%</td><td>1,113.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>46.9</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z099598" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1103.00" data-paid="1103.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="46.4" data-test="false">
+              <td>z099598</td><td>100463</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,103.00</td><td>0.0%</td><td>1,103.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>46.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z117198" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="签收付款" data-revenue="1056.00" data-paid="1056.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="46.0" data-test="false">
+              <td>z117198</td><td>100403</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>签收付款</td><td>1,056.00</td><td>0.0%</td><td>1,056.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>46.0</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z529416" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="未填写" data-payment="预付" data-revenue="1040.00" data-paid="1040.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="45.5" data-test="false">
+              <td>z529416</td><td>100127</td><td>未知</td><td>方涛</td><td>未填写</td><td>预付</td><td>1,040.00</td><td>0.0%</td><td>1,040.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>45.5</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z695213" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="1030.00" data-paid="1030.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="45.1" data-test="false">
+              <td>z695213</td><td>100256</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,030.00</td><td>0.0%</td><td>1,030.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>45.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t255347" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="1008.00" data-paid="1008.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="44.7" data-test="false">
+              <td>t255347</td><td>100165</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,008.00</td><td>0.0%</td><td>1,008.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>44.7</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z451989" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="978.00" data-paid="978.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="44.2" data-test="false">
+              <td>z451989</td><td>100531</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>978.00</td><td>0.0%</td><td>978.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>44.2</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t462068" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="930.00" data-paid="930.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="43.8" data-test="false">
+              <td>t462068</td><td>100526</td><td>未知</td><td>徐书贤</td><td>日本同行客户</td><td>预付</td><td>930.00</td><td>0.0%</td><td>930.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>43.8</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t999812" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="918.00" data-paid="918.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="43.3" data-test="false">
+              <td>t999812</td><td>100553</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>918.00</td><td>0.0%</td><td>918.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>43.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z289663" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="865.00" data-paid="865.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="42.9" data-test="false">
+              <td>z289663</td><td>100564</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>865.00</td><td>0.0%</td><td>865.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>42.9</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z680923" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="792.00" data-paid="792.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="42.0" data-test="false">
+              <td>z680923</td><td>100395</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>792.00</td><td>0.0%</td><td>792.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>42.0</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t579203" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="现结" data-revenue="665.00" data-paid="665.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="41.1" data-test="false">
+              <td>t579203</td><td>100048</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>现结</td><td>665.00</td><td>0.0%</td><td>665.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>41.1</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z989082" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="572.00" data-paid="572.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="40.7" data-test="false">
+              <td>z989082</td><td>100474</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>572.00</td><td>0.0%</td><td>572.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>40.7</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z337235" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="528.00" data-paid="528.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="40.3" data-test="false">
+              <td>z337235</td><td>100495</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>528.00</td><td>0.0%</td><td>528.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>40.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z895755" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="462.00" data-paid="462.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="39.4" data-test="false">
+              <td>z895755</td><td>100524</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>462.00</td><td>0.0%</td><td>462.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>39.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t304276" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="442.00" data-paid="442.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="39.0" data-test="false">
+              <td>t304276</td><td>100561</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>442.00</td><td>0.0%</td><td>442.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>39.0</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="t184016" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本同行客户" data-payment="预付" data-revenue="441.00" data-paid="441.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="38.3" data-test="false">
+              <td>t184016</td><td>100480</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>441.00</td><td>0.0%</td><td>441.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>38.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z126550" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="441.00" data-paid="441.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="38.3" data-test="false">
+              <td>z126550</td><td>100541</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>441.00</td><td>0.0%</td><td>441.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>38.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z048496" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="406.00" data-paid="406.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="37.6" data-test="false">
+              <td>z048496</td><td>100540</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>406.00</td><td>0.0%</td><td>406.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>37.6</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z022786" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="325.00" data-paid="325.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="37.2" data-test="false">
+              <td>z022786</td><td>100402</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>325.00</td><td>0.0%</td><td>325.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>37.2</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z306918" data-status="未知" data-sales="徐书贤" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="312.00" data-paid="312.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="36.8" data-test="false">
+              <td>z306918</td><td>100103</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>312.00</td><td>0.0%</td><td>312.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>36.8</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z489598" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="275.00" data-paid="275.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="36.3" data-test="false">
+              <td>z489598</td><td>100546</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>275.00</td><td>0.0%</td><td>275.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>36.3</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z493951" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="264.00" data-paid="264.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="35.9" data-test="false">
+              <td>z493951</td><td>100555</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>264.00</td><td>0.0%</td><td>264.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>35.9</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z685925" data-status="未知" data-sales="方涛" data-risk="已清账/无未付" data-action="维护" data-segment="低贡献/待激活" data-type="日本直客客户" data-payment="预付" data-revenue="75.00" data-paid="75.00" data-unpaid="0.00" data-unbilled="0.00" data-payable="0.00" data-balance="0.00" data-score="35.4" data-test="false">
+              <td>z685925</td><td>100532</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>75.00</td><td>0.0%</td><td>75.00</td><td>0.00</td><td>0.0%</td><td>0.00</td><td>0.00</td><td>0.00</td><td>35.4</td><td>低贡献/待激活</td><td>已清账/无未付</td><td>维护</td>
+            </tr>
+            
+
+            <tr data-user="z466198" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="15177.63" data-paid="11561.63" data-unpaid="3616.00" data-unbilled="3616.00" data-payable="0.00" data-balance="0.00" data-score="74.3" data-test="false">
+              <td>z466198</td><td>100448</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>15,177.63</td><td>0.6%</td><td>11,561.63</td><td>3,616.00</td><td>23.8%</td><td>3,616.00</td><td>0.00</td><td>0.00</td><td>74.3</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t237133" data-status="未知" data-sales="饶先喜" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="14849.00" data-paid="10999.00" data-unpaid="3850.00" data-unbilled="2303.00" data-payable="1547.00" data-balance="-1547.00" data-score="73.0" data-test="false">
+              <td>t237133</td><td>100108</td><td>未知</td><td>饶先喜</td><td>日本同行客户</td><td>预付</td><td>14,849.00</td><td>0.5%</td><td>10,999.00</td><td>3,850.00</td><td>25.9%</td><td>2,303.00</td><td>1,547.00</td><td>-1,547.00</td><td>73.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z908598" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="月结" data-revenue="15970.00" data-paid="10615.00" data-unpaid="5355.00" data-unbilled="5355.00" data-payable="0.00" data-balance="0.00" data-score="71.3" data-test="false">
+              <td>z908598</td><td>100290</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>月结</td><td>15,970.00</td><td>0.6%</td><td>10,615.00</td><td>5,355.00</td><td>33.5%</td><td>5,355.00</td><td>0.00</td><td>0.00</td><td>71.3</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z136737" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="14311.00" data-paid="9947.00" data-unpaid="4364.00" data-unbilled="2337.00" data-payable="2027.00" data-balance="-2027.00" data-score="70.0" data-test="false">
+              <td>z136737</td><td>100134</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>14,311.00</td><td>0.5%</td><td>9,947.00</td><td>4,364.00</td><td>30.5%</td><td>2,337.00</td><td>2,027.00</td><td>-2,027.00</td><td>70.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t066793" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="9579.00" data-paid="7022.00" data-unpaid="2557.00" data-unbilled="2557.00" data-payable="0.00" data-balance="0.00" data-score="66.0" data-test="false">
+              <td>t066793</td><td>100545</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>9,579.00</td><td>0.3%</td><td>7,022.00</td><td>2,557.00</td><td>26.7%</td><td>2,557.00</td><td>0.00</td><td>0.00</td><td>66.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z392009" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="签收付款" data-revenue="13772.36" data-paid="8281.00" data-unpaid="5491.36" data-unbilled="2933.00" data-payable="2558.36" data-balance="-2558.36" data-score="65.4" data-test="false">
+              <td>z392009</td><td>100075</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>签收付款</td><td>13,772.36</td><td>0.5%</td><td>8,281.00</td><td>5,491.36</td><td>39.9%</td><td>2,933.00</td><td>2,558.36</td><td>-2,558.36</td><td>65.4</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t388566" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="周结" data-revenue="12526.00" data-paid="8004.00" data-unpaid="4522.00" data-unbilled="4522.00" data-payable="0.00" data-balance="0.00" data-score="65.3" data-test="false">
+              <td>t388566</td><td>100054</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>周结</td><td>12,526.00</td><td>0.5%</td><td>8,004.00</td><td>4,522.00</td><td>36.1%</td><td>4,522.00</td><td>0.00</td><td>0.00</td><td>65.3</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z040220" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="月结" data-revenue="10908.00" data-paid="7351.00" data-unpaid="3557.00" data-unbilled="3557.00" data-payable="0.00" data-balance="0.00" data-score="64.2" data-test="false">
+              <td>z040220</td><td>100311</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>月结</td><td>10,908.00</td><td>0.4%</td><td>7,351.00</td><td>3,557.00</td><td>32.6%</td><td>3,557.00</td><td>0.00</td><td>0.00</td><td>64.2</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z958017" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="签收付款" data-revenue="11080.00" data-paid="7294.00" data-unpaid="3786.00" data-unbilled="504.00" data-payable="3282.00" data-balance="-3282.00" data-score="64.0" data-test="false">
+              <td>z958017</td><td>100519</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>签收付款</td><td>11,080.00</td><td>0.4%</td><td>7,294.00</td><td>3,786.00</td><td>34.2%</td><td>504.00</td><td>3,282.00</td><td>-3,282.00</td><td>64.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z143938" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="16666.00" data-paid="7124.00" data-unpaid="9542.00" data-unbilled="616.00" data-payable="8926.00" data-balance="-8926.00" data-score="62.5" data-test="false">
+              <td>z143938</td><td>100385</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>16,666.00</td><td>0.6%</td><td>7,124.00</td><td>9,542.00</td><td>57.3%</td><td>616.00</td><td>8,926.00</td><td>-8,926.00</td><td>62.5</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z735084" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="7423.16" data-paid="5115.00" data-unpaid="2308.16" data-unbilled="0.00" data-payable="2308.16" data-balance="-2308.16" data-score="61.0" data-test="false">
+              <td>z735084</td><td>100513</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>7,423.16</td><td>0.3%</td><td>5,115.00</td><td>2,308.16</td><td>31.1%</td><td>0.00</td><td>2,308.16</td><td>-2,308.16</td><td>61.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z786884" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="5425.00" data-paid="4122.00" data-unpaid="1303.00" data-unbilled="903.00" data-payable="400.00" data-balance="2981.50" data-score="59.8" data-test="false">
+              <td>z786884</td><td>100417</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>5,425.00</td><td>0.2%</td><td>4,122.00</td><td>1,303.00</td><td>24.0%</td><td>903.00</td><td>400.00</td><td>2,981.50</td><td>59.8</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t648716" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="5734.00" data-paid="4070.00" data-unpaid="1664.00" data-unbilled="0.00" data-payable="1664.00" data-balance="-1664.00" data-score="58.8" data-test="false">
+              <td>t648716</td><td>100503</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>5,734.00</td><td>0.2%</td><td>4,070.00</td><td>1,664.00</td><td>29.0%</td><td>0.00</td><td>1,664.00</td><td>-1,664.00</td><td>58.8</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z218615" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="15897.35" data-paid="4270.18" data-unpaid="11627.17" data-unbilled="0.00" data-payable="11627.17" data-balance="-7167.39" data-score="57.7" data-test="false">
+              <td>z218615</td><td>100510</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>15,897.35</td><td>0.6%</td><td>4,270.18</td><td>11,627.17</td><td>73.1%</td><td>0.00</td><td>11,627.17</td><td>-7,167.39</td><td>57.7</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t512489" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="13557.00" data-paid="5582.00" data-unpaid="7975.00" data-unbilled="2100.00" data-payable="5875.00" data-balance="-5875.00" data-score="57.7" data-test="false">
+              <td>t512489</td><td>100465</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>13,557.00</td><td>0.5%</td><td>5,582.00</td><td>7,975.00</td><td>58.8%</td><td>2,100.00</td><td>5,875.00</td><td>-5,875.00</td><td>57.7</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t790282" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="5397.00" data-paid="3777.00" data-unpaid="1620.00" data-unbilled="0.00" data-payable="1620.00" data-balance="-45.59" data-score="56.6" data-test="false">
+              <td>t790282</td><td>100009</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>5,397.00</td><td>0.2%</td><td>3,777.00</td><td>1,620.00</td><td>30.0%</td><td>0.00</td><td>1,620.00</td><td>-45.59</td><td>56.6</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t642985" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="11871.00" data-paid="4830.00" data-unpaid="7041.00" data-unbilled="416.00" data-payable="6625.00" data-balance="-6625.00" data-score="56.3" data-test="false">
+              <td>t642985</td><td>100104</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>11,871.00</td><td>0.4%</td><td>4,830.00</td><td>7,041.00</td><td>59.3%</td><td>416.00</td><td>6,625.00</td><td>-6,625.00</td><td>56.3</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z725875" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="7924.82" data-paid="4139.50" data-unpaid="3785.32" data-unbilled="2168.32" data-payable="1617.00" data-balance="-1617.00" data-score="54.8" data-test="false">
+              <td>z725875</td><td>100246</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>7,924.82</td><td>0.3%</td><td>4,139.50</td><td>3,785.32</td><td>47.8%</td><td>2,168.32</td><td>1,617.00</td><td>-1,617.00</td><td>54.8</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t775023" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="7709.58" data-paid="3963.35" data-unpaid="3746.23" data-unbilled="0.00" data-payable="3746.23" data-balance="-3746.23" data-score="54.0" data-test="false">
+              <td>t775023</td><td>100505</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>7,709.58</td><td>0.3%</td><td>3,963.35</td><td>3,746.23</td><td>48.6%</td><td>0.00</td><td>3,746.23</td><td>-3,746.23</td><td>54.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t604731" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本同行客户" data-payment="预付" data-revenue="3829.00" data-paid="2567.00" data-unpaid="1262.00" data-unbilled="1262.00" data-payable="0.00" data-balance="0.00" data-score="51.4" data-test="false">
+              <td>t604731</td><td>100428</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>3,829.00</td><td>0.1%</td><td>2,567.00</td><td>1,262.00</td><td>33.0%</td><td>1,262.00</td><td>0.00</td><td>0.00</td><td>51.4</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z161600" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="5364.00" data-paid="3132.00" data-unpaid="2232.00" data-unbilled="1054.00" data-payable="1178.00" data-balance="-1178.00" data-score="51.0" data-test="false">
+              <td>z161600</td><td>100348</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>5,364.00</td><td>0.2%</td><td>3,132.00</td><td>2,232.00</td><td>41.6%</td><td>1,054.00</td><td>1,178.00</td><td>-1,178.00</td><td>51.0</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t132468" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="7184.00" data-paid="2502.00" data-unpaid="4682.00" data-unbilled="3826.00" data-payable="856.00" data-balance="-856.00" data-score="46.9" data-test="false">
+              <td>t132468</td><td>100059</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>7,184.00</td><td>0.3%</td><td>2,502.00</td><td>4,682.00</td><td>65.2%</td><td>3,826.00</td><td>856.00</td><td>-856.00</td><td>46.9</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z260365" data-status="未知" data-sales="徐书贤" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="7269.16" data-paid="2091.00" data-unpaid="5178.16" data-unbilled="0.00" data-payable="5178.16" data-balance="-5178.16" data-score="46.3" data-test="false">
+              <td>z260365</td><td>100095</td><td>未知</td><td>徐书贤</td><td>日本直客客户</td><td>预付</td><td>7,269.16</td><td>0.3%</td><td>2,091.00</td><td>5,178.16</td><td>71.2%</td><td>0.00</td><td>5,178.16</td><td>-5,178.16</td><td>46.3</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z980350" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="2709.00" data-paid="1830.00" data-unpaid="879.00" data-unbilled="879.00" data-payable="0.00" data-balance="0.00" data-score="45.4" data-test="false">
+              <td>z980350</td><td>100251</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>2,709.00</td><td>0.1%</td><td>1,830.00</td><td>879.00</td><td>32.4%</td><td>879.00</td><td>0.00</td><td>0.00</td><td>45.4</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t541855" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本同行客户" data-payment="预付" data-revenue="11200.00" data-paid="0.00" data-unpaid="11200.00" data-unbilled="364.00" data-payable="10836.00" data-balance="-10836.00" data-score="44.8" data-test="false">
+              <td>t541855</td><td>100550</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>11,200.00</td><td>0.4%</td><td>0.00</td><td>11,200.00</td><td>100.0%</td><td>364.00</td><td>10,836.00</td><td>-10,836.00</td><td>44.8</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z560857" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="中腰部需跟进" data-type="日本直客客户" data-payment="预付" data-revenue="4818.00" data-paid="1650.00" data-unpaid="3168.00" data-unbilled="0.00" data-payable="3168.00" data-balance="-3168.00" data-score="42.4" data-test="false">
+              <td>z560857</td><td>100399</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>4,818.00</td><td>0.2%</td><td>1,650.00</td><td>3,168.00</td><td>65.8%</td><td>0.00</td><td>3,168.00</td><td>-3,168.00</td><td>42.4</td><td>中腰部需跟进</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z752521" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="1512.00" data-paid="1008.00" data-unpaid="504.00" data-unbilled="504.00" data-payable="0.00" data-balance="0.00" data-score="36.2" data-test="false">
+              <td>z752521</td><td>100466</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,512.00</td><td>0.1%</td><td>1,008.00</td><td>504.00</td><td>33.3%</td><td>504.00</td><td>0.00</td><td>0.00</td><td>36.2</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z378113" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="月结" data-revenue="2138.00" data-paid="442.00" data-unpaid="1696.00" data-unbilled="1696.00" data-payable="0.00" data-balance="0.00" data-score="27.1" data-test="false">
+              <td>z378113</td><td>100333</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>月结</td><td>2,138.00</td><td>0.1%</td><td>442.00</td><td>1,696.00</td><td>79.3%</td><td>1,696.00</td><td>0.00</td><td>0.00</td><td>27.1</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t829558" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本同行客户" data-payment="预付" data-revenue="2916.00" data-paid="0.00" data-unpaid="2916.00" data-unbilled="2916.00" data-payable="0.00" data-balance="0.00" data-score="26.8" data-test="false">
+              <td>t829558</td><td>100542</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>2,916.00</td><td>0.1%</td><td>0.00</td><td>2,916.00</td><td>100.0%</td><td>2,916.00</td><td>0.00</td><td>0.00</td><td>26.8</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t213143" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本同行客户" data-payment="预付" data-revenue="2780.00" data-paid="0.00" data-unpaid="2780.00" data-unbilled="2780.00" data-payable="0.00" data-balance="0.00" data-score="25.9" data-test="false">
+              <td>t213143</td><td>100056</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>2,780.00</td><td>0.1%</td><td>0.00</td><td>2,780.00</td><td>100.0%</td><td>2,780.00</td><td>0.00</td><td>0.00</td><td>25.9</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z565791" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="2684.12" data-paid="0.00" data-unpaid="2684.12" data-unbilled="1342.06" data-payable="1342.06" data-balance="-1342.06" data-score="24.6" data-test="false">
+              <td>z565791</td><td>100547</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>2,684.12</td><td>0.1%</td><td>0.00</td><td>2,684.12</td><td>100.0%</td><td>1,342.06</td><td>1,342.06</td><td>-1,342.06</td><td>24.6</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z165716" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="1428.00" data-paid="504.00" data-unpaid="924.00" data-unbilled="0.00" data-payable="924.00" data-balance="-924.00" data-score="23.8" data-test="false">
+              <td>z165716</td><td>100476</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,428.00</td><td>0.1%</td><td>504.00</td><td>924.00</td><td>64.7%</td><td>0.00</td><td>924.00</td><td>-924.00</td><td>23.8</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t965057" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本同行客户" data-payment="预付" data-revenue="2612.00" data-paid="0.00" data-unpaid="2612.00" data-unbilled="0.00" data-payable="2612.00" data-balance="-2612.00" data-score="23.7" data-test="false">
+              <td>t965057</td><td>100133</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>2,612.00</td><td>0.1%</td><td>0.00</td><td>2,612.00</td><td>100.0%</td><td>0.00</td><td>2,612.00</td><td>-2,612.00</td><td>23.7</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z297684" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="1470.00" data-paid="441.00" data-unpaid="1029.00" data-unbilled="1029.00" data-payable="0.00" data-balance="0.00" data-score="22.9" data-test="false">
+              <td>z297684</td><td>100559</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,470.00</td><td>0.1%</td><td>441.00</td><td>1,029.00</td><td>70.0%</td><td>1,029.00</td><td>0.00</td><td>0.00</td><td>22.9</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t626932" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本同行客户" data-payment="预付" data-revenue="1953.00" data-paid="0.00" data-unpaid="1953.00" data-unbilled="0.00" data-payable="1953.00" data-balance="-1953.00" data-score="20.2" data-test="false">
+              <td>t626932</td><td>100426</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>1,953.00</td><td>0.1%</td><td>0.00</td><td>1,953.00</td><td>100.0%</td><td>0.00</td><td>1,953.00</td><td>-1,953.00</td><td>20.2</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z743797" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="1888.00" data-paid="0.00" data-unpaid="1888.00" data-unbilled="1888.00" data-payable="0.00" data-balance="0.00" data-score="19.8" data-test="false">
+              <td>z743797</td><td>100159</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>1,888.00</td><td>0.1%</td><td>0.00</td><td>1,888.00</td><td>100.0%</td><td>1,888.00</td><td>0.00</td><td>0.00</td><td>19.8</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t807017" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本同行客户" data-payment="预付" data-revenue="814.00" data-paid="0.00" data-unpaid="814.00" data-unbilled="814.00" data-payable="0.00" data-balance="0.00" data-score="7.5" data-test="false">
+              <td>t807017</td><td>100062</td><td>未知</td><td>方涛</td><td>日本同行客户</td><td>预付</td><td>814.00</td><td>0.0%</td><td>0.00</td><td>814.00</td><td>100.0%</td><td>814.00</td><td>0.00</td><td>0.00</td><td>7.5</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="z276607" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="日本直客客户" data-payment="预付" data-revenue="672.00" data-paid="0.00" data-unpaid="672.00" data-unbilled="0.00" data-payable="672.00" data-balance="-672.00" data-score="6.6" data-test="false">
+              <td>z276607</td><td>100562</td><td>未知</td><td>方涛</td><td>日本直客客户</td><td>预付</td><td>672.00</td><td>0.0%</td><td>0.00</td><td>672.00</td><td>100.0%</td><td>0.00</td><td>672.00</td><td>-672.00</td><td>6.6</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            
+
+            <tr data-user="t594751" data-status="未知" data-sales="方涛" data-risk="高风险未付" data-action="限制额度/改付款条件" data-segment="低贡献且有风险" data-type="（特殊）同行美国和日本" data-payment="预付" data-revenue="512.00" data-paid="0.00" data-unpaid="512.00" data-unbilled="512.00" data-payable="0.00" data-balance="0.00" data-score="4.8" data-test="false">
+              <td>t594751</td><td>100013</td><td>未知</td><td>方涛</td><td>（特殊）同行美国和日本</td><td>预付</td><td>512.00</td><td>0.0%</td><td>0.00</td><td>512.00</td><td>100.0%</td><td>512.00</td><td>0.00</td><td>0.00</td><td>4.8</td><td>低贡献且有风险</td><td>高风险未付</td><td>限制额度/改付款条件</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+      <p class="note">客户价值评分为应收视角的方向性评分：以营业额分位、支付率、未支付率综合计算；不包含毛利、重量、订单数、复购频次。若后续能提供订单明细/毛利表，可进一步升级为真实客户 LTV/利润价值模型。</p>
+    </section>
+  </main>
+  <script>
+    const table = document.getElementById('detailTable');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const search = document.getElementById('search');
+    const salesFilter = document.getElementById('salesFilter');
+    const segmentFilter = document.getElementById('segmentFilter');
+    const riskFilter = document.getElementById('riskFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const unpaidOnly = document.getElementById('unpaidOnly');
+    const focusOnly = document.getElementById('focusOnly');
+    const testOnly = document.getElementById('testOnly');
+    const resetBtn = document.getElementById('reset');
+    const clearDrill = document.getElementById('clearDrill');
+    const drillTitle = document.getElementById('drillTitle');
+    const drillText = document.getElementById('drillText');
+    const drillCount = document.getElementById('drillCount');
+    const drillRevenue = document.getElementById('drillRevenue');
+    const drillUnpaid = document.getElementById('drillUnpaid');
+    const drillRate = document.getElementById('drillRate');
+    const drillCustomers = document.getElementById('drillCustomers');
+    const detailUser = document.getElementById('detailUser');
+    const detailAction = document.getElementById('detailAction');
+    const detailNote = document.getElementById('detailNote');
+    const detailGrid = document.getElementById('detailGrid');
+    const heroTop5 = document.getElementById('heroTop5');
+    const heroTop10 = document.getElementById('heroTop10');
+    const heroCoreCount = document.getElementById('heroCoreCount');
+    const heroScopeLabel = document.getElementById('heroScopeLabel');
+    const heroSalesCount = document.getElementById('heroSalesCount');
+    const heroTestCount = document.getElementById('heroTestCount');
+    const kpiCustomers = document.getElementById('kpiCustomers');
+    const kpiCustomersHint = document.getElementById('kpiCustomersHint');
+    const kpiRevenue = document.getElementById('kpiRevenue');
+    const kpiPaid = document.getElementById('kpiPaid');
+    const kpiPaidHint = document.getElementById('kpiPaidHint');
+    const kpiUnpaid = document.getElementById('kpiUnpaid');
+    const kpiUnpaidHint = document.getElementById('kpiUnpaidHint');
+    const kpiUnpaidCustomers = document.getElementById('kpiUnpaidCustomers');
+    const kpiUnpaidCustomersHint = document.getElementById('kpiUnpaidCustomersHint');
+    const kpiNegativeBalance = document.getElementById('kpiNegativeBalance');
+    const kpiNegativeHint = document.getElementById('kpiNegativeHint');
+    const insightTopValue = document.getElementById('insightTopValue');
+    const insightTopText = document.getElementById('insightTopText');
+    const insightCollectionValue = document.getElementById('insightCollectionValue');
+    const insightCollectionText = document.getElementById('insightCollectionText');
+    const insightStructureValue = document.getElementById('insightStructureValue');
+    const insightStructureText = document.getElementById('insightStructureText');
+    const insightDataValue = document.getElementById('insightDataValue');
+    const insightDataText = document.getElementById('insightDataText');
+    const freqEls = {
+      high: {
+        count: document.getElementById('freqHighCount'),
+        revenue: document.getElementById('freqHighRevenue'),
+        unpaid: document.getElementById('freqHighUnpaid'),
+        list: document.getElementById('freqHighList')
+      },
+      mid: {
+        count: document.getElementById('freqMidCount'),
+        revenue: document.getElementById('freqMidRevenue'),
+        unpaid: document.getElementById('freqMidUnpaid'),
+        list: document.getElementById('freqMidList')
+      },
+      low: {
+        count: document.getElementById('freqLowCount'),
+        revenue: document.getElementById('freqLowRevenue'),
+        unpaid: document.getElementById('freqLowUnpaid'),
+        list: document.getElementById('freqLowList')
+      }
+    };
+    let activeDrill = null;
+    let sortState = { index: -1, direction: 1 };
+    let heroSets = { top5: new Set(), top10: new Set(), core80: new Set() };
+    let frequencySets = { high: new Set(), mid: new Set(), low: new Set() };
+
+    function fillSelect(select, values) {
+      [...new Set(values)].sort().forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        select.appendChild(opt);
+      });
+    }
+    function fillSalesSelect() {
+      const counts = new Map();
+      rows.forEach(row => counts.set(row.dataset.sales, (counts.get(row.dataset.sales) || 0) + 1));
+      [...counts.entries()]
+        .filter(([name, count]) => name && count > 0)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-Hans-CN'))
+        .forEach(([name, count]) => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = `${name}（${count}）`;
+          salesFilter.appendChild(opt);
+        });
+    }
+    fillSelect(segmentFilter, rows.map(r => r.dataset.segment));
+    fillSelect(riskFilter, rows.map(r => r.dataset.risk));
+    fillSelect(statusFilter, rows.map(r => r.dataset.status));
+    fillSalesSelect();
+
+    function moneyWan(value) { return (value / 10000).toFixed(2) + '万'; }
+    function pctText(value) { return (value * 100).toFixed(1) + '%'; }
+    function parseNumber(text) {
+      const raw = text.replaceAll(',', '').replace('%', '').trim();
+      const n = Number(raw);
+      return Number.isFinite(n) ? n : null;
+    }
+    function rowMatchesDrill(row) {
+      if (!activeDrill) return true;
+      if (activeDrill.field === 'unpaid') return Number(row.dataset.unpaid) > 0;
+      if (activeDrill.field === 'paid') return Number(row.dataset.paid) > 0;
+      if (activeDrill.field === 'negative') return Number(row.dataset.balance) < 0;
+      if (activeDrill.field === 'test') return row.dataset.test === 'true';
+      if (activeDrill.field === 'heroSet') return heroSets[activeDrill.value]?.has(row.dataset.user);
+      if (activeDrill.field === 'frequency') return frequencySets[activeDrill.value]?.has(row.dataset.user);
+      return row.dataset[activeDrill.field] === activeDrill.value;
+    }
+    function getVisibleRows() { return rows.filter(row => row.style.display !== 'none'); }
+    function getSalesScopeRows() {
+      const sales = salesFilter.value;
+      return rows.filter(row => !sales || row.dataset.sales === sales);
+    }
+    function sumRows(list, key) {
+      return list.reduce((sum, row) => sum + Number(row.dataset[key] || 0), 0);
+    }
+    function updateScopeSummary() {
+      const scoped = getSalesScopeRows();
+      const revenue = sumRows(scoped, 'revenue');
+      const paid = sumRows(scoped, 'paid');
+      const unpaid = sumRows(scoped, 'unpaid');
+      const negRows = scoped.filter(row => Number(row.dataset.balance) < 0);
+      const unpaidRows = scoped.filter(row => Number(row.dataset.unpaid) > 0);
+      const testRows = scoped.filter(row => row.dataset.test === 'true');
+      const sortedRevenue = [...scoped].sort((a, b) => Number(b.dataset.revenue) - Number(a.dataset.revenue));
+      const top5 = sumRows(sortedRevenue.slice(0, 5), 'revenue');
+      const top10 = sumRows(sortedRevenue.slice(0, 10), 'revenue');
+      let cumulative = 0;
+      let coreCount = 0;
+      for (const row of sortedRevenue) {
+        if (revenue <= 0) break;
+        cumulative += Number(row.dataset.revenue || 0);
+        coreCount += 1;
+        if (cumulative / revenue >= 0.8) break;
+      }
+      heroSets = {
+        top5: new Set(sortedRevenue.slice(0, 5).map(row => row.dataset.user)),
+        top10: new Set(sortedRevenue.slice(0, 10).map(row => row.dataset.user)),
+        core80: new Set(sortedRevenue.slice(0, coreCount).map(row => row.dataset.user))
+      };
+      const focusRows = scoped.filter(row => row.dataset.action === '本周重点跟进');
+      const focusUnpaid = sumRows(focusRows, 'unpaid');
+      const top20Revenue = sumRows(sortedRevenue.slice(0, 20), 'revenue');
+      const salesNames = new Set(scoped.map(row => row.dataset.sales));
+      const paymentMap = new Map();
+      scoped.forEach(row => paymentMap.set(row.dataset.payment, (paymentMap.get(row.dataset.payment) || 0) + Number(row.dataset.revenue || 0)));
+      const topPayment = [...paymentMap.entries()].sort((a, b) => b[1] - a[1])[0] || ['无', 0];
+      const scopeName = salesFilter.value || '全部业务员';
+
+      heroTop5.textContent = revenue > 0 ? pctText(top5 / revenue) : '0.0%';
+      heroTop10.textContent = revenue > 0 ? pctText(top10 / revenue) : '0.0%';
+      heroCoreCount.textContent = coreCount;
+      heroScopeLabel.textContent = salesFilter.value ? '当前业务员' : '业务员数';
+      heroSalesCount.textContent = salesFilter.value || salesNames.size;
+      heroTestCount.textContent = `疑似测试 ${testRows.length} 个`;
+
+      kpiCustomers.textContent = scoped.length;
+      kpiCustomersHint.textContent = salesFilter.value ? `当前业务员：${scopeName}` : '点击查看全部客户';
+      kpiRevenue.textContent = moneyWan(revenue);
+      kpiPaid.textContent = moneyWan(paid);
+      kpiPaidHint.textContent = '支付率 ' + (revenue > 0 ? pctText(paid / revenue) : '0.0%');
+      kpiUnpaid.textContent = moneyWan(unpaid);
+      kpiUnpaidHint.textContent = '未支付率 ' + (revenue > 0 ? pctText(unpaid / revenue) : '0.0%');
+      kpiUnpaidCustomers.textContent = unpaidRows.length;
+      kpiUnpaidCustomersHint.textContent = '占客户数 ' + (scoped.length ? pctText(unpaidRows.length / scoped.length) : '0.0%');
+      kpiNegativeBalance.textContent = moneyWan(Math.abs(sumRows(negRows, 'balance')));
+      kpiNegativeHint.textContent = `${negRows.length} 个客户`;
+
+      insightTopValue.textContent = moneyWan(top20Revenue);
+      insightTopText.textContent = `当前范围 Top 20 客户贡献 ${revenue > 0 ? pctText(top20Revenue / revenue) : '0.0%'} 营业额，${salesFilter.value ? '这是该业务员的核心维护池。' : '是服务稳定性、价格策略和专属客服投入的核心对象。'}`;
+      insightCollectionValue.textContent = moneyWan(focusUnpaid);
+      insightCollectionText.textContent = `${focusRows.length} 个“本周重点跟进”客户占未支付 ${unpaid > 0 ? pctText(focusUnpaid / unpaid) : '0.0%'}，应优先逐户确认账单状态。`;
+      insightStructureValue.textContent = moneyWan(topPayment[1]);
+      insightStructureText.textContent = `${topPayment[0]}贡献最高，占当前范围营业额 ${revenue > 0 ? pctText(topPayment[1] / revenue) : '0.0%'}；需要按结算方式跟踪回款承诺和额度。`;
+      insightDataValue.textContent = testRows.length;
+      insightDataText.textContent = salesFilter.value ? `当前业务员范围内疑似测试账号 ${testRows.length} 个。` : '疑似测试账号已保留在明细，建议系统侧确认是否排除；本看板不擅自删除，避免影响账务核对。';
+      updateFrequencyPanel(sortedRevenue);
+    }
+    function updateFrequencyPanel(sortedRevenue) {
+      const n = sortedRevenue.length;
+      const highCount = n ? Math.max(1, Math.ceil(n * 0.2)) : 0;
+      const midCount = n > highCount ? Math.max(1, Math.ceil(n * 0.3)) : 0;
+      const groups = {
+        high: sortedRevenue.slice(0, highCount),
+        mid: sortedRevenue.slice(highCount, highCount + midCount),
+        low: sortedRevenue.slice(highCount + midCount)
+      };
+      frequencySets = {
+        high: new Set(groups.high.map(row => row.dataset.user)),
+        mid: new Set(groups.mid.map(row => row.dataset.user)),
+        low: new Set(groups.low.map(row => row.dataset.user))
+      };
+      Object.entries(groups).forEach(([key, list]) => {
+        const els = freqEls[key];
+        const revenue = sumRows(list, 'revenue');
+        const unpaid = sumRows(list, 'unpaid');
+        els.count.textContent = list.length;
+        els.revenue.textContent = moneyWan(revenue);
+        els.unpaid.textContent = moneyWan(unpaid);
+        els.list.innerHTML = list.slice(0, 5).map(row => {
+          return `<div class="freq-customer"><strong>${row.dataset.user}</strong><span>${moneyWan(Number(row.dataset.revenue || 0))}</span></div>`;
+        }).join('') || '<div class="freq-customer"><span>无客户</span><span></span></div>';
+      });
+    }
+    function updateActiveStyles() {
+      document.querySelectorAll('.active-drill').forEach(el => el.classList.remove('active-drill', 'active'));
+      document.querySelectorAll('[data-drill-field], [data-kpi-action], [data-hero-drill], [data-frequency-drill]').forEach(el => {
+        const kpi = el.dataset.kpiAction;
+        const field = el.dataset.drillField;
+        const value = el.dataset.drillValue;
+        const hero = el.dataset.heroDrill;
+        const freq = el.dataset.frequencyDrill;
+        const matched = activeDrill && ((field === activeDrill.field && value === activeDrill.value) || kpi === activeDrill.field || (activeDrill.field === 'heroSet' && hero === activeDrill.value) || (activeDrill.field === 'frequency' && freq === activeDrill.value));
+        if (matched) el.classList.add('active', 'active-drill');
+      });
+    }
+    function openCustomer(row) {
+      rows.forEach(r => r.classList.remove('selected'));
+      row.classList.add('selected');
+      const c = row.children;
+      detailUser.textContent = c[0].innerText;
+      detailAction.textContent = c[17].innerText;
+      const unpaid = Number(row.dataset.unpaid);
+      const revenue = Number(row.dataset.revenue);
+      const rate = revenue > 0 ? unpaid / revenue : 0;
+      detailNote.textContent = `${c[4].innerText} / ${c[5].innerText}，业务员：${c[3].innerText}，价值分层：${c[15].innerText}，风险层级：${c[16].innerText}。`;
+      const items = [
+        ['客户编码', c[1].innerText], ['客户状态', c[2].innerText],
+        ['业务员', c[3].innerText],
+        ['营业额', moneyWan(revenue)], ['客户价值评分', row.dataset.score],
+        ['已支付', moneyWan(Number(row.dataset.paid))], ['未支付', moneyWan(unpaid)],
+        ['未支付率', pctText(rate)], ['账户实际余额', moneyWan(Number(row.dataset.balance))],
+        ['待出账单', moneyWan(Number(row.dataset.unbilled))], ['待付账单', moneyWan(Number(row.dataset.payable))]
+      ];
+      detailGrid.innerHTML = items.map(([k,v]) => `<div class="detail-item"><span>${k}</span><b>${v}</b></div>`).join('');
+    }
+    function potentialCompare(a, b) {
+      const scoreDiff = Number(b.dataset.score || 0) - Number(a.dataset.score || 0);
+      if (scoreDiff) return scoreDiff;
+      const revenueDiff = Number(b.dataset.revenue || 0) - Number(a.dataset.revenue || 0);
+      if (revenueDiff) return revenueDiff;
+      const aUnpaidRate = Number(a.dataset.revenue || 0) > 0 ? Number(a.dataset.unpaid || 0) / Number(a.dataset.revenue || 0) : 1;
+      const bUnpaidRate = Number(b.dataset.revenue || 0) > 0 ? Number(b.dataset.unpaid || 0) / Number(b.dataset.revenue || 0) : 1;
+      const riskDiff = aUnpaidRate - bUnpaidRate;
+      if (riskDiff) return riskDiff;
+      return Number(b.dataset.paid || 0) - Number(a.dataset.paid || 0);
+    }
+    function updateDrillPanel() {
+      const visible = getVisibleRows();
+      const revenue = visible.reduce((sum, row) => sum + Number(row.dataset.revenue || 0), 0);
+      const unpaid = visible.reduce((sum, row) => sum + Number(row.dataset.unpaid || 0), 0);
+      const scopePrefix = salesFilter.value ? `业务员：${salesFilter.value} / ` : '';
+      drillTitle.textContent = '当前钻取：' + scopePrefix + (activeDrill ? activeDrill.label : '全部客户');
+      drillText.textContent = `当前筛选下共 ${visible.length} 个客户，营业额 ${moneyWan(revenue)}，未支付 ${moneyWan(unpaid)}。点击客户可查看右侧单客户详情。`;
+      drillCount.textContent = visible.length;
+      drillRevenue.textContent = moneyWan(revenue);
+      drillUnpaid.textContent = moneyWan(unpaid);
+      drillRate.textContent = revenue > 0 ? pctText(unpaid / revenue) : '0.0%';
+      const potentialSorted = [...visible].sort(potentialCompare);
+      const top = potentialSorted.slice(0, 12);
+      drillCustomers.innerHTML = top.map(row => {
+        const c = row.children;
+        return `<button class="customer-chip" data-chip-user="${row.dataset.user}"><strong>${c[0].innerText}</strong><b>${moneyWan(Number(row.dataset.unpaid))}</b><span>${c[4].innerText} / ${c[5].innerText}</span><span>${c[10].innerText}</span></button>`;
+      }).join('') || '<p class="note">没有匹配客户。</p>';
+      updateActiveStyles();
+      const selected = document.querySelector('#detailTable tbody tr.selected');
+      if (visible.length && (!selected || selected.style.display === 'none')) openCustomer(potentialSorted[0]);
+      if (!visible.length) {
+        rows.forEach(r => r.classList.remove('selected'));
+        detailUser.textContent = '未选择客户';
+        detailAction.textContent = '无匹配数据';
+        detailNote.textContent = '当前筛选条件下没有客户。';
+        detailGrid.innerHTML = '';
+      }
+    }
+    function applyFilters() {
+      const q = search.value.trim().toLowerCase();
+      const sales = salesFilter.value;
+      const seg = segmentFilter.value;
+      const risk = riskFilter.value;
+      const status = statusFilter.value;
+      const onlyUnpaid = unpaidOnly.classList.contains('active');
+      const onlyFocus = focusOnly.classList.contains('active');
+      const onlyTest = testOnly.classList.contains('active');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const show = (!q || text.includes(q))
+          && (!seg || row.dataset.segment === seg)
+          && (!sales || row.dataset.sales === sales)
+          && (!risk || row.dataset.risk === risk)
+          && (!status || row.dataset.status === status)
+          && (!onlyUnpaid || Number(row.dataset.unpaid) > 0)
+          && (!onlyFocus || row.dataset.action === '本周重点跟进')
+          && (!onlyTest || row.dataset.test === 'true')
+          && rowMatchesDrill(row);
+        row.style.display = show ? '' : 'none';
+      });
+      updateScopeSummary();
+      updateDrillPanel();
+    }
+    function setDrill(field, value, label) {
+      activeDrill = field ? { field, value, label } : null;
+      applyFilters();
+      document.getElementById('drillPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+    function sortRows(index) {
+      if (sortState.index === index) sortState.direction *= -1;
+      else sortState = { index, direction: 1 };
+      rows.sort((a, b) => {
+        const av = a.children[index].innerText;
+        const bv = b.children[index].innerText;
+        const an = parseNumber(av);
+        const bn = parseNumber(bv);
+        if (an !== null && bn !== null) return (an - bn) * sortState.direction;
+        return av.localeCompare(bv, 'zh-Hans-CN') * sortState.direction;
+      });
+      rows.forEach(row => tbody.appendChild(row));
+      applyFilters();
+    }
+    table.querySelectorAll('th').forEach((th, i) => th.addEventListener('click', () => sortRows(i)));
+    tbody.addEventListener('click', event => {
+      const row = event.target.closest('tr');
+      if (row) openCustomer(row);
+    });
+    drillCustomers.addEventListener('click', event => {
+      const chip = event.target.closest('[data-chip-user]');
+      if (!chip) return;
+      const row = rows.find(r => r.dataset.user === chip.dataset.chipUser);
+      if (row) openCustomer(row);
+    });
+    document.querySelectorAll('[data-drill-field]').forEach(el => {
+      el.addEventListener('click', () => setDrill(el.dataset.drillField, el.dataset.drillValue, el.dataset.drillLabel || el.dataset.drillValue));
+    });
+    document.querySelectorAll('[data-kpi-action]').forEach(el => {
+      el.addEventListener('click', () => {
+        const action = el.dataset.kpiAction;
+        if (action === 'all') setDrill(null, '', '全部客户');
+        if (action === 'unpaid') setDrill('unpaid', '1', '有未支付客户');
+        if (action === 'paid') setDrill('paid', '1', '有支付记录客户');
+        if (action === 'negative') setDrill('negative', '1', '账户实际余额为负');
+      });
+    });
+    document.querySelectorAll('[data-hero-drill]').forEach(el => {
+      el.addEventListener('click', () => {
+        const key = el.dataset.heroDrill;
+        const labelMap = {
+          top5: 'Top 5 贡献客户',
+          top10: 'Top 10 贡献客户',
+          core80: '80% 营业额核心维护池'
+        };
+        setDrill('heroSet', key, labelMap[key] || '核心客户集合');
+      });
+    });
+    document.querySelectorAll('[data-frequency-drill]').forEach(el => {
+      el.addEventListener('click', () => {
+        const key = el.dataset.frequencyDrill;
+        const labelMap = {
+          high: '高频发货客户（重点去聊）',
+          mid: '中频发货客户（持续跟进）',
+          low: '低频发货客户（加深合作）'
+        };
+        setDrill('frequency', key, labelMap[key] || '发货活跃度客户');
+      });
+    });
+    search.addEventListener('input', applyFilters);
+    [segmentFilter, riskFilter, statusFilter].forEach(el => el.addEventListener('change', applyFilters));
+    salesFilter.addEventListener('change', () => {
+      activeDrill = null;
+      rows.forEach(r => r.classList.remove('selected'));
+      applyFilters();
+    });
+    unpaidOnly.addEventListener('click', () => { unpaidOnly.classList.toggle('active'); applyFilters(); });
+    focusOnly.addEventListener('click', () => { focusOnly.classList.toggle('active'); applyFilters(); });
+    testOnly.addEventListener('click', () => { testOnly.classList.toggle('active'); applyFilters(); });
+    clearDrill.addEventListener('click', () => setDrill(null, '', '全部客户'));
+    resetBtn.addEventListener('click', () => {
+      search.value = ''; salesFilter.value = ''; segmentFilter.value = ''; riskFilter.value = ''; statusFilter.value = '';
+      unpaidOnly.classList.remove('active'); focusOnly.classList.remove('active'); testOnly.classList.remove('active');
+      activeDrill = null;
+      rows.forEach(r => r.classList.remove('selected'));
+      applyFilters();
+    });
+    applyFilters();
+  </script>
+</body>
+</html>
